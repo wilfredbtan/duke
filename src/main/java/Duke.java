@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Duke {
 
-    private ArrayList<String> list = new ArrayList<>();
+    private ArrayList<Task> list = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("____________________________________________________________");
@@ -21,11 +21,15 @@ public class Duke {
         while(true) {
             String word = sc.next();
             switch (word) {
-                case "bye":
+                case "done":
+                    int index = sc.nextInt();
+                    Task currTask = list.get(index - 1);
+                    currTask.setDone();
+
                     System.out.println("____________________________________________________________");
-                    System.out.println("  Bye. Hope to see you again soon!");
+                    System.out.println("  Nice! I've marked this task as done:");
+                    System.out.println("    " + currTask);
                     System.out.println("____________________________________________________________");
-                    System.exit(1);
                     break;
                 case "list":
                     System.out.println("____________________________________________________________");
@@ -36,11 +40,20 @@ public class Duke {
 
                     System.out.println("____________________________________________________________");
                     break;
+                case "bye":
+                    System.out.println("____________________________________________________________");
+                    System.out.println("  Bye. Hope to see you again soon!");
+                    System.out.println("____________________________________________________________");
+                    System.exit(1);
+                    break;
                 default:
                     System.out.println("____________________________________________________________");
                     System.out.println("  added: " + word);
                     System.out.println("____________________________________________________________");
-                    list.add(word);
+    
+                    Task task = new Task(word);
+                    list.add(task);
+
                     break;
             }
         }
