@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class Duke {
 
                     System.out.println("   ____________________________________________________________");
                     System.out.println("    Got it. I've added this task:");
-                    System.out.println("    " + currTodo);
+                    System.out.println("      " + currTodo);
                     System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                     System.out.println("   ____________________________________________________________");
                     break;
@@ -51,7 +52,7 @@ public class Duke {
 
                         System.out.println("   ____________________________________________________________");
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + currDeadline);
+                        System.out.println("      " + currDeadline);
                         System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                         System.out.println("   ____________________________________________________________");
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -71,7 +72,7 @@ public class Duke {
 
                         System.out.println("   ____________________________________________________________");
                         System.out.println("    Got it. I've added this task:");
-                        System.out.println("    " + currEvent);
+                        System.out.println("      " + currEvent);
                         System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
                         System.out.println("   ____________________________________________________________");
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -81,15 +82,44 @@ public class Duke {
                     }
                     break;
 
-                case "done":
-                    int index = sc.nextInt();
-                    Task currTask = taskList.get(index - 1);
-                    currTask.setDone();
+                case "delete":
+                    try {
+                        int deletionIndex = sc.nextInt() - 1;
+                        Task deletedTask = taskList.get(deletionIndex);
 
-                    System.out.println("    ____________________________________________________________");
-                    System.out.println("     Nice! I've marked this task as done:");
-                    System.out.println("     " + currTask);
-                    System.out.println("    ____________________________________________________________");
+                        taskList.remove(deletionIndex);
+
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Noted. I've removed this task:");
+                        System.out.println("      " + deletedTask);
+                        System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                        System.out.println("   ____________________________________________________________");
+                    } catch (InputMismatchException e) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Deletion should refer to a number!");
+                        System.out.println("   ____________________________________________________________");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("     Deleted item is out of bounds!");
+                        System.out.println("   ____________________________________________________________");
+                    }
+                    break;
+
+                case "done":
+                    try {
+                        int index = sc.nextInt();
+                        Task currTask = taskList.get(index - 1);
+                        currTask.setDone();
+
+                        System.out.println("    ____________________________________________________________");
+                        System.out.println("     Nice! I've marked this task as done:");
+                        System.out.println("     " + currTask);
+                        System.out.println("    ____________________________________________________________");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("     Selected item is out of bounds!");
+                        System.out.println("   ____________________________________________________________");
+                    }
                     break;
                 case "list":
                     System.out.println("   ____________________________________________________________");
