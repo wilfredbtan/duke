@@ -1,9 +1,10 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Duke {
 
-    private ArrayList<Task> list = new ArrayList<>();
+    private ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("____________________________________________________________");
@@ -21,9 +22,52 @@ public class Duke {
         while(true) {
             String word = sc.next();
             switch (word) {
+                case "todo":
+                    String todo = sc.nextLine();
+                    System.out.println("todo:" + todo);
+                    Task currTodo = new Todo(todo);
+                    taskList.add(currTodo);
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("  Got it. I've added this task:");
+                    System.out.println("  " + currTodo);
+                    System.out.println("  Now you have " + taskList.size() + " tasks in this list.");
+                    System.out.println("____________________________________________________________");
+                    break;
+
+                case "deadline":
+                    String deadline = sc.nextLine();
+                    String[] descriptionAndDate = deadline.split("/");
+                    System.out.println(descriptionAndDate[1]);
+
+                    Task currDeadline = new Deadline(descriptionAndDate[0], descriptionAndDate[1]);
+                    taskList.add(currDeadline);
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("  Got it. I've added this task:");
+                    System.out.println("  " + currDeadline);
+                    System.out.println("  Now you have " + taskList.size() + " tasks in this list.");
+                    System.out.println("____________________________________________________________");
+                    break;
+
+                case "event":
+                    String event = sc.nextLine();
+                    descriptionAndDate = event.split("/");
+                    System.out.println(descriptionAndDate[1]);
+
+                    Task currEvent = new Event(descriptionAndDate[0], descriptionAndDate[1]);
+                    taskList.add(currEvent);
+
+                    System.out.println("____________________________________________________________");
+                    System.out.println("  Got it. I've added this task:");
+                    System.out.println("  " + currEvent);
+                    System.out.println("  Now you have " + taskList.size() + " tasks in this list.");
+                    System.out.println("____________________________________________________________");
+                    break;
+
                 case "done":
                     int index = sc.nextInt();
-                    Task currTask = list.get(index - 1);
+                    Task currTask = taskList.get(index - 1);
                     currTask.setDone();
 
                     System.out.println("____________________________________________________________");
@@ -34,8 +78,8 @@ public class Duke {
                 case "list":
                     System.out.println("____________________________________________________________");
 
-                    for (int i = 0; i < list.size(); i++) {
-                        System.out.println("  " + (i+1) + ". " + list.get(i));
+                    for (int i = 0; i < taskList.size(); i++) {
+                        System.out.println("  " + (i+1) + ". " + taskList.get(i));
                     }
 
                     System.out.println("____________________________________________________________");
@@ -48,14 +92,11 @@ public class Duke {
                     break;
                 default:
                     System.out.println("____________________________________________________________");
-                    System.out.println("  added: " + word);
+                    System.out.println("not a valid instruction");
                     System.out.println("____________________________________________________________");
-    
-                    Task task = new Task(word);
-                    list.add(task);
-
                     break;
             }
         }
     }
+
 }
