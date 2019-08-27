@@ -24,6 +24,12 @@ public class Duke {
             switch (word) {
                 case "todo":
                     String todo = sc.nextLine();
+                    if (todo.equals("")) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    ☹  OOPS!!! The description of a todo cannot be empty.");
+                        System.out.println("   ____________________________________________________________");
+                        break;
+                    }
                     System.out.println("todo:" + todo);
                     Task currTodo = new Todo(todo);
                     taskList.add(currTodo);
@@ -37,30 +43,42 @@ public class Duke {
 
                 case "deadline":
                     String deadline = sc.nextLine();
-                    String[] descriptionAndDate = deadline.split("/");
+                    try {
+                        String[] descriptionAndDate = deadline.split("/");
 
-                    Task currDeadline = new Deadline(descriptionAndDate[0], descriptionAndDate[1]);
-                    taskList.add(currDeadline);
+                        Task currDeadline = new Deadline(descriptionAndDate[0], descriptionAndDate[1]);
+                        taskList.add(currDeadline);
 
-                    System.out.println("   ____________________________________________________________");
-                    System.out.println("    Got it. I've added this task:");
-                    System.out.println("    " + currDeadline);
-                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
-                    System.out.println("   ____________________________________________________________");
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Got it. I've added this task:");
+                        System.out.println("    " + currDeadline);
+                        System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                        System.out.println("   ____________________________________________________________");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Deadlines must have a date!");
+                        System.out.println("   ____________________________________________________________");
+                    }
                     break;
 
                 case "event":
                     String event = sc.nextLine();
-                    descriptionAndDate = event.split("/");
+                    try {
+                        String[] descriptionAndDate = event.split("/");
 
-                    Task currEvent = new Event(descriptionAndDate[0], descriptionAndDate[1]);
-                    taskList.add(currEvent);
+                        Task currEvent = new Event(descriptionAndDate[0], descriptionAndDate[1]);
+                        taskList.add(currEvent);
 
-                    System.out.println("   ____________________________________________________________");
-                    System.out.println("    Got it. I've added this task:");
-                    System.out.println("    " + currEvent);
-                    System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
-                    System.out.println("   ____________________________________________________________");
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Got it. I've added this task:");
+                        System.out.println("    " + currEvent);
+                        System.out.println("    Now you have " + taskList.size() + " tasks in this list.");
+                        System.out.println("   ____________________________________________________________");
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println("   ____________________________________________________________");
+                        System.out.println("    Events must have a date!");
+                        System.out.println("   ____________________________________________________________");
+                    }
                     break;
 
                 case "done":
@@ -90,7 +108,7 @@ public class Duke {
                     break;
                 default:
                     System.out.println("   ____________________________________________________________");
-                    System.out.println("    not a valid instruction");
+                    System.out.println("    \u2639  OOPS!! I'm sorry, but I don't know what that means :-(");
                     System.out.println("   ____________________________________________________________");
                     break;
             }
