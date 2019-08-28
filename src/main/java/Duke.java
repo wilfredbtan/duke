@@ -1,10 +1,7 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.io.BufferedWriter;
-import java.io.File;
 
 public class Duke {
 
@@ -28,16 +25,9 @@ public class Duke {
                 ".1/CS2103/indiv_proj/duke/src/main/java/data/duke.txt");
 
         try {
-            file.createNewFile();
-            String str = "";
+            loadData();
+        } catch (IOException e) { }
 
-            FileWriter f = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(f);
-            writer.write(str);
-
-            writer.close();
-        } catch (IOException e) {
-        }
 
         while(true) {
             String word = sc.next();
@@ -217,6 +207,54 @@ public class Duke {
                 appendData(task);
             }
         } catch (IOException e) { }
+    }
+
+    private void loadData() throws IOException {
+        FileInputStream fis = new FileInputStream(file);
+        InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
+        BufferedReader br = new BufferedReader(isr);
+
+        //load tasks into task list.
+        String line;
+        while ((line = br.readLine()) != null) {
+            Task newTask = convertStringToTask(line);
+            taskList.add(newTask);
+        }
+    }
+
+    private Task convertStringToTask(String taskData) {
+        boolean isDone;
+        Task newTask;
+
+        String[] dataArr = taskData.split("[|]");
+        String type = dataArr[0];
+
+        if (dataArr[1].equals("1")) {
+            isDone = true;
+        } else {
+            isDone = false;
+        }
+
+        switch (type) {
+        case "T":
+            newTask = new Todo(dataArr[2]);
+            newTask.isDone = isDone;
+            break;
+        case "D":
+            newTask = new Deadline(dataArr[2], dataArr[3]);
+            newTask.isDone = isDone;
+            break;
+        case "E":
+            newTask = new Event(dataArr[2], dataArr[3]);
+            newTask.isDone = isDone;
+            break;
+        default:
+            System.out.println("not a valid task");
+            newTask = null;
+            break;
+        }
+
+        return newTask;
     }
 
 }
