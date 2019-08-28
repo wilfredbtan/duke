@@ -1,5 +1,9 @@
-import java.util.Arrays;
+import java.text.ParseException;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -45,9 +49,19 @@ public class Duke {
                 case "deadline":
                     String deadline = sc.nextLine();
                     try {
-                        String[] descriptionAndDate = deadline.split("/");
+                        String[] descriptionAndDate = deadline.split("/", 2);
 
-                        Task currDeadline = new Deadline(descriptionAndDate[0], descriptionAndDate[1]);
+                        String desc = descriptionAndDate[0];
+                        LocalDateTime date;
+
+                        try {
+                            date = parseDate(descriptionAndDate[1]);
+                        } catch (ParseException e) {
+                            System.out.println("Invalid date format");
+                            date = null;
+                        }
+
+                        Task currDeadline = new Deadline(desc, date);
                         taskList.add(currDeadline);
 
                         System.out.println("   ____________________________________________________________");
@@ -65,7 +79,7 @@ public class Duke {
                 case "event":
                     String event = sc.nextLine();
                     try {
-                        String[] descriptionAndDate = event.split("/");
+                        String[] descriptionAndDate = event.split("/", 2);
 
                         Task currEvent = new Event(descriptionAndDate[0], descriptionAndDate[1]);
                         taskList.add(currEvent);
@@ -143,6 +157,12 @@ public class Duke {
                     break;
             }
         }
+    }
+
+    private LocalDateTime parseDate(String dateString) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm", Locale.ENGLISH);
+        LocalDateTime date = LocalDateTime.parse(dateString, formatter);
+        return date;
     }
 
 }
