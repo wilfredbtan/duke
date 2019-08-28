@@ -1,7 +1,8 @@
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -35,7 +36,6 @@ public class Duke {
                         System.out.println("   ____________________________________________________________");
                         break;
                     }
-                    System.out.println("todo:" + todo);
                     Task currTodo = new Todo(todo);
                     taskList.add(currTodo);
 
@@ -81,7 +81,12 @@ public class Duke {
                     try {
                         String[] descriptionAndDate = event.split("/", 2);
 
-                        Task currEvent = new Event(descriptionAndDate[0], descriptionAndDate[1]);
+                        String desc = descriptionAndDate[0];
+                        String[] dateArr = descriptionAndDate[1].split("-");
+                        LocalDateTime startDate = parseDate(dateArr[0]);
+                        LocalTime endTime = LocalTime.parse(dateArr[1], DateTimeFormatter.ofPattern("HHmm"));
+
+                        Task currEvent = new Event(desc, startDate, endTime);
                         taskList.add(currEvent);
 
                         System.out.println("   ____________________________________________________________");
@@ -93,10 +98,15 @@ public class Duke {
                         System.out.println("   ____________________________________________________________");
                         System.out.println("    Events must have a date!");
                         System.out.println("   ____________________________________________________________");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Invalid date format");
+                    } catch (ParseException e) {
+                        System.out.println("Invalid date format");
+                    } catch (DateTimeParseException e) {
+                        System.out.println("Invalid date format");
                     }
-                    break;
-
-                case "delete":
+                break;
+            case "delete":
                     try {
                         int deletionIndex = sc.nextInt() - 1;
                         Task deletedTask = taskList.get(deletionIndex);
@@ -163,6 +173,18 @@ public class Duke {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm", Locale.ENGLISH);
         LocalDateTime date = LocalDateTime.parse(dateString, formatter);
         return date;
+    }
+
+    private LocalDateTime[] parseDateRange(String dateString) throws  ParseException {
+        String[] dateArr = dateString.split("-");
+        LocalDateTime startDate = parseDate(dateArr[0]);
+        System.out.println(dateArr[1]);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm", Locale.ENGLISH);
+        LocalDateTime endTime = LocalDateTime.parse(dateArr[1], formatter);
+
+        LocalDateTime[] dateRange = {startDate, endTime};
+
+        return dateRange;
     }
 
 }
