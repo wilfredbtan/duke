@@ -1,11 +1,10 @@
 enum Type {
-    TODO,
-    DEADLINE,
-    EVENT
+    T, D, E;
 }
 
 public class Task {
 
+    protected String type;
     protected String description;
     protected boolean isDone;
 

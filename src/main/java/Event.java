@@ -4,9 +4,10 @@ public class Event extends Task{
     public Event(String description, String by) {
         super(description);
         this.at = by;
+        this.type = "E";
     }
 
     public String toString() {
-        return "[E]" + super.toString() + "(at: " + at + ")";
+        return "[" + this.type + "]" + super.toString() + "(at: " + at + ")";
     }
 }
