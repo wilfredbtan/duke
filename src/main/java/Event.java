@@ -1,13 +1,23 @@
-public class Event extends Task{
-    protected String at;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
-    public Event(String description, String by) {
+public class Event extends Task{
+    protected LocalDateTime startDate;
+    protected LocalTime endTime;
+
+    public Event(String description, LocalDateTime startDate, LocalTime endTime) {
         super(description);
-        this.at = by;
-        this.type = "E";
+        this.startDate = startDate;
+        this.endTime = endTime;
     }
 
     public String toString() {
-        return "[" + this.type + "]" + super.toString() + "(at: " + at + ")";
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"
+                , Locale.ENGLISH);
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
+        return "[E]" + super.toString() + "(at: " + startDate.format(dateTimeFormat)
+                + "-" + endTime.format(timeFormat) + ")";
     }
 }

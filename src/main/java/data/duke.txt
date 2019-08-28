@@ -1,1 +1,2 @@
-D|1| asdfv |5pm
+D|0| hello |26/11/1996 2355
+T|0| hello
