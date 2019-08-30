@@ -1,3 +1,10 @@
+package tasklist;
+
+import exception.DukeException;
+import storage.Storage;
+import task.Task;
+import ui.Ui;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -11,7 +18,7 @@ public class TaskList {
         this.tasks = taskList;
     }
 
-    public void add(Task task, Storage storage) throws DukeException{
+    public void add(Task task, Storage storage) throws DukeException {
         if (task.getDescription() != null) {
             tasks.add(task);
             storage.save(this);
