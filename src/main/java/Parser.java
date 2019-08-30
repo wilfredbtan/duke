@@ -15,19 +15,21 @@ public class Parser {
     private LocalTime endTime;
     private int index;
 
-    public Parser (String userInput) {
+    public Parser (String userInput) throws DukeException {
         this.userInput = userInput;
         parse();
     }
 
-    private void parse() {
+    private void parse() throws DukeException {
         Ui ui = new Ui();
 
         Scanner sc = new Scanner(userInput);
 
         this.commandString = sc.next();
 
-        if (commandString.equals("list") || commandString.equals("bye")) return;
+        if (commandString.equals("list") || commandString.equals("bye")) {
+            return;
+        }
 
         if (sc.hasNextInt()) {
             this.index = sc.nextInt();
@@ -39,15 +41,12 @@ public class Parser {
 
             try {
                 if (commandString.equals("deadline") || commandString.equals("event")) {
-                    System.out.println(descriptionAndDate[1]);
                     parseDateTime(descriptionAndDate[1]);
                 }
             } catch (ParseException e) {
-                ui.showDateError();
+                throw new DukeException("    Parse exception Description", e);
             } catch (ArrayIndexOutOfBoundsException e) {
-                System.out.println("   ____________________________________________________________");
-                System.out.println("    Missing description!");
-                System.out.println("   ____________________________________________________________");
+                throw new DukeException("    Please include a date and time", e);
             }
         }
     }
@@ -63,7 +62,6 @@ public class Parser {
             this.startTime = LocalTime.parse(timeRange[0], timeFormatter());
             this.endTime = LocalTime.parse(timeRange[1], timeFormatter());
         }
-
     }
 
     public static Task parseStringToTask(String taskData) throws ParseException {
@@ -116,10 +114,6 @@ public class Parser {
     public static DateTimeFormatter timeFormatter() {
         return DateTimeFormatter.ofPattern("[HHmm][HH:mm][H]", Locale.ENGLISH);
     }
-
-//    public static String dateDisplayFormat(LocalDate date) {
-//
-//    }
 
     public String getDesc() {
         return this.desc;

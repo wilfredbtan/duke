@@ -1,74 +1,63 @@
 public class Command {
 
     Parser parsed;
-    Storage storage;
 
-    public Command(Parser parsed, Storage storage) {
+    public Command(Parser parsed) {
         this.parsed = parsed;
-        this.storage = storage;
     }
 
     //main driver
-    public void execute() {
-        Ui ui = new Ui();
+    public void execute(Ui ui, TaskList taskList, Storage storage) throws DukeException{
+        ui = new Ui();
         switch (parsed.getCommandString()) {
         case "todo":
             Task currTodo = new Todo(parsed.getDesc());
-            TaskList.add(currTodo, storage);
+            taskList.add(currTodo, storage);
             break;
 
         case "deadline":
-            Task currDeadline = new Deadline(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime());
-            TaskList.add(currDeadline, storage);
+            try {
+                Task currDeadline = new Deadline(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime());
+                taskList.add(currDeadline, storage);
+            } catch (NullPointerException e) {
+                throw new DukeException("    Sorry, that's an incomplete command. Failed to add task.", e);
+            }
             break;
 
         case "event":
             Task currEvent = new Event(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime(),
                     parsed.getEndTime());
-            TaskList.add(currEvent, storage);
+            taskList.add(currEvent, storage);
             break;
 
         case "delete":
             try {
-                Task deletedTask = TaskList.tasks.get(parsed.getIndex() - 1);
-                TaskList.tasks.remove(parsed.getIndex() - 1);
-                ui.showDeleteSuccess(deletedTask);
-//            } catch (InputMismatchException e) {
-//                System.out.println("   ____________________________________________________________");
-//                System.out.println("    Deletion should refer to a number!");
-//                System.out.println("   ____________________________________________________________");
+                Task deletedTask = taskList.get(parsed.getIndex() - 1);
+                taskList.remove(parsed.getIndex() - 1, storage);
+                ui.showDeleteSuccess(deletedTask, taskList);
             } catch (IndexOutOfBoundsException e) {
-                System.out.println("   ____________________________________________________________");
-                System.out.println("     Deleted item is out of bounds!");
-                System.out.println("   ____________________________________________________________");
+                throw new DukeException("     Deleted item is out of bounds! Task not deleted", e);
             }
             break;
 
         case "done":
-            Task currTask = TaskList.tasks.get(parsed.getIndex() - 1);
-            currTask.setDone(true);
-
-            System.out.println("    ____________________________________________________________");
-            System.out.println("     Nice! I've marked this task as done:");
-            System.out.println("     " + currTask);
-            System.out.println("    ____________________________________________________________");
-
-//            } catch (IndexOutOfBoundsException e) {
-//                System.out.println("   ____________________________________________________________");
-//                System.out.println("     Selected item is out of bounds!");
-//                System.out.println("   ____________________________________________________________");
-//            }
+            try {
+                Task doneTask = taskList.get(parsed.getIndex() - 1);
+                taskList.setDone(doneTask, storage);
+                ui.showDoneSuccess(doneTask);
+            } catch (IndexOutOfBoundsException e) {
+                throw new DukeException("     Selected item is out of bounds!. Task not marked as done.", e);
+            }
             break;
         case "list":
-            ui.showList();
+            ui.showList(taskList);
             break;
         case "bye":
             ui.showBye();
             System.exit(1);
             break;
         default:
-            ui.showGeneralError();
-            break;
+            ui.showInvalidInputError();
         }
     }
 

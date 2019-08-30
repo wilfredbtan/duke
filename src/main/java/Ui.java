@@ -1,9 +1,10 @@
+import java.util.ArrayList;
+
 public class Ui {
     public void showWelcome() {
-        String welcomeString = "";
-        welcomeString +=
+        String welcomeString =
                 ("    Hello! I'm Duke\n") +
-                ("    What can I do for you?\n");
+                        ("    What can I do for you?\n");
         wrapWithLine(welcomeString);
     }
 
@@ -11,50 +12,47 @@ public class Ui {
         wrapWithLine("    Bye. Hope to see you again soon!\n");
     }
 
-    public void showList() {
+    public void showList(TaskList taskList) {
         String listString = "";
-        for (int i = 0; i < TaskList.tasks.size(); i++) {
-            listString += "    " + (i+1) + ". " + TaskList.tasks.get(i) + "\n";
+        for (int i = 0; i < taskList.getSize(); i++) {
+            listString += "    " + (i + 1) + ". " + taskList.get(i) + "\n";
         }
         wrapWithLine(listString);
     }
 
-    public void showLoadingError() {
-        wrapWithLine("    Initialised with empty TaskList\n");
+    public void showError(String errorMessage) {
+        wrapWithLine(errorMessage);
     }
 
-    public void showGeneralError() {
+    public void showLoadingError() {
+        wrapWithLine("    No existing data. Duke initialised with an empty TaskList\n");
+    }
+
+    public void showInvalidInputError() {
         wrapWithLine("    \u2639  OOPS!! I'm sorry, but I don't know what that means :-(\n");
     }
 
-    public void showTodoError() {
-        wrapWithLine("    ☹  OOPS!!! The description of a todo cannot be empty.\n");
-    }
-
-    public void showDateError() {
-        wrapWithLine("    invalid date format.\n");
-    }
-
-    public static void showAddSuccess(Task addedTask) {
-        String successString = "";
-        successString +=
+    public static void showAddSuccess(Task addedTask, TaskList taskList) {
+        String successString =
                 ("    Got it. I've added this task:\n") +
                 ("      " + addedTask + "\n") +
-                ("    Now you have " + TaskList.tasks.size() + " tasks in this list.\n");
+                ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
         wrapWithLine(successString);
     }
 
-    public static void showAddFailure(Task failedTask) {
-        wrapWithLine("    Sorry, that's an incomplete command\n");
-    }
-
-    public void showDeleteSuccess(Task deletedTask) {
-        String deleteString = "";
-        deleteString +=
+    public void showDeleteSuccess(Task deletedTask, TaskList taskList) {
+        String deleteString =
                 ("    Noted. I've removed this task:\n") +
                 ("      " + deletedTask + "\n") +
-                ("    Now you have " + TaskList.tasks.size() + " tasks in this list.\n");
+                ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
         wrapWithLine(deleteString);
+    }
+
+    public void showDoneSuccess(Task doneTask) {
+        String doneString =
+                ("     Nice! I've marked this task as done:\n") +
+                ("     " + doneTask + "\n");
+        wrapWithLine(doneString);
     }
 
     public static void showLine() {

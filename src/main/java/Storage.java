@@ -19,8 +19,8 @@ public class Storage {
         this.file = new File(filePath);
     }
 
-    public ArrayList<Task> load() throws IOException{
-        ArrayList<Task> newTaskList = new ArrayList<>();
+    public TaskList load() throws IOException{
+        ArrayList<Task> tasks = new ArrayList<>();
 
         try {
             FileInputStream fis = new FileInputStream(file);
@@ -30,20 +30,21 @@ public class Storage {
             String line;
             while ((line = br.readLine()) != null) {
                 Task newTask = Parser.parseStringToTask(line);
-                newTaskList.add(newTask);
+                tasks.add(newTask);
             }
         } catch (ParseException e) {
             System.out.println("Failed to parse String to task");
         }
 
-        return newTaskList;
+        return new TaskList(tasks);
     }
 
-    public void save() {
+    public void save(TaskList taskList) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
-            for (Task task : TaskList.tasks) {
+
+            for (Task task : taskList.getTasks()) {
                 String formattedData = formatData(task);
 
                 writer.append(formattedData);
@@ -62,6 +63,7 @@ public class Storage {
         data += currTask.getDone() ? "1|" : "0|";
         data += currTask.getDescription();
 
+
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
         DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
 
@@ -69,6 +71,7 @@ public class Storage {
             data += "|" + ((Deadline) currTask).getDate().format(dateFormatter) +
                     "|" + ((Deadline) currTask).getTime().format(timeFormatter);
         }
+
         if (currTask instanceof Event) {
             data += "|" + ((Event) currTask).getStartDate().format(dateFormatter) +
                     "|" + ((Event) currTask).getStartTime().format(timeFormatter) +
