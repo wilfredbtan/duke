@@ -20,7 +20,7 @@ public class Command {
 
     /**
      * Initialises a Command object.
-     * @param parsed
+     * @param parsed Parsed object which contains variables that can be accessed by a command object.
      */
     public Command(Parsable parsed) {
         this.parsed = parsed;

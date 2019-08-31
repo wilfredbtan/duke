@@ -29,7 +29,7 @@ public class Ui implements UserInterface {
     /**
      * Shows the list of tasks.
      * @param taskList TaskList that is to be shown.
-     * @throws DukeException
+     * @throws DukeException Throws an exception if it is an invalid list or there exists and invalid task in the list.
      */
     public void showList(TaskListInterface taskList) throws DukeException {
         String listString = "";
@@ -41,7 +41,7 @@ public class Ui implements UserInterface {
 
     /**
      * Shows a formatted error message.
-     * @param errorMessage
+     * @param errorMessage Error message that will be printed.
      */
     public void showError(String errorMessage) {
         wrapWithLine(errorMessage);

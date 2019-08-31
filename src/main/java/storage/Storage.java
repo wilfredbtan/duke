@@ -37,7 +37,7 @@ public class Storage implements StorageInterface {
     /**
      * Loads a file and parses the data into Tasks which are stored in a TaskList.
      * @return Tasklist that contains the loaded tasks.
-     * @throws IOException
+     * @throws IOException Exception is thrown when an invalid file path is provided.
      */
     public TaskList load() throws IOException{
         ArrayList<Task> tasks = new ArrayList<>();

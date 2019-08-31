@@ -35,7 +35,8 @@ public class Parser implements Parsable {
     /**
      * Initialises the Parser object.
      * @param userInput Input provided by the user.
-     * @throws DukeException
+     * @throws DukeException Exception is thrown when an invalid user input is received. For example, user input may
+     * not be in the right format or may be missing components required for certain commands.
      */
     public Parser (String userInput) throws DukeException {
         parse(userInput);
@@ -44,7 +45,8 @@ public class Parser implements Parsable {
     /**
      * Parses user input into portions which can used to carry out commands.
      * @param userInput Input provided by the user.
-     * @throws DukeException
+     * @throws DukeException Exception is thrown when there is an invalid format provided. For example,
+     * missing date / time or incorrect date / time format.
      */
     private void parse(String userInput) throws DukeException {
         Ui ui = new Ui();
@@ -80,7 +82,7 @@ public class Parser implements Parsable {
     /**
      * Parses a DateTime string into formatted dates and times.
      * @param dateTimeString Unformatted String containing the date and time.
-     * @throws ParseException
+     * @throws ParseException Exception is thrown when an incorrect date / time string is provided.
      */
     private void parseDateTime(String dateTimeString) throws ParseException {
         String[] dateTimeArr = dateTimeString.split(" ");
@@ -99,7 +101,7 @@ public class Parser implements Parsable {
      * Parses Strings into Task objects.
      * @param taskData String in the format type|isDone|desc|startDate(optional)|startTime(optional)|endTime(optional).
      * @return Task object.
-     * @throws ParseException
+     * @throws ParseException Exception is thrown when an invalid task is loaded.
      */
     public static Task parseStringToTask(String taskData) throws ParseException {
         Task newTask;

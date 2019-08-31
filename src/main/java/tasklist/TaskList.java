@@ -32,7 +32,8 @@ public class TaskList implements TaskListInterface {
      * Adds a task to the task list.
      * @param task Task that is to be added to the list.
      * @param storage Storage object to save changes.
-     * @throws DukeException
+     * @throws DukeException Exception is thrown when an invalid task is added. For example, an incomplete command or
+     * tasks with null description.
      */
     public void add(Task task, StorageInterface storage) throws DukeException {
         if (task.getDescription() != null) {
@@ -47,7 +48,7 @@ public class TaskList implements TaskListInterface {
      * Removes the task from the task list.
      * @param index Index of the task to be removed.
      * @param storage Storage object to save changes.
-     * @throws DukeException
+     * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
     public void remove(int index, StorageInterface storage) throws DukeException{
         tasks.remove(index);
@@ -58,7 +59,7 @@ public class TaskList implements TaskListInterface {
      * Sets the task as done in the Storage.
      * @param task Task which will be set as done.
      * @param storage Storage object to save changes.
-     * @throws DukeException
+     * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
     public void setDone(Task task, StorageInterface storage) throws DukeException{
         task.setDone(true);

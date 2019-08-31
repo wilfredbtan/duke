@@ -23,7 +23,7 @@ public class Task {
 
     /**
      * Gets the status icon of the task. Shows a tick if done and an "x" if Task is not done.
-     * @return
+     * @return Status icon of the task.
      */
     public String getStatusIcon() {
         return (isDone ? "\u2713" : "\u2718");
