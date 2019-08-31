@@ -14,22 +14,39 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * Parser class used to process Strings into variables that the Command object can execute.
+ */
 public class Parser implements Parsable {
 
-    private String userInput;
+    /** Command portion of the input. */
     private String commandString;
+    /** Description portion of the input. */
     private String desc;
+    /** Date when the task starts. */
     private LocalDate startDate;
+    /** Time whena the task starts. */
     private LocalTime startTime;
+    /** Time when the task ends. */
     private LocalTime endTime;
+    /** Index for deletion or marking tasks as done. */
     private int index;
 
+    /**
+     * Initialises the Parser object.
+     * @param userInput Input provided by the user.
+     * @throws DukeException
+     */
     public Parser (String userInput) throws DukeException {
-        this.userInput = userInput;
-        parse();
+        parse(userInput);
     }
 
-    private void parse() throws DukeException {
+    /**
+     * Parses user input into portions which can used to carry out commands.
+     * @param userInput Input provided by the user.
+     * @throws DukeException
+     */
+    private void parse(String userInput) throws DukeException {
         Ui ui = new Ui();
 
         Scanner sc = new Scanner(userInput);
@@ -60,8 +77,13 @@ public class Parser implements Parsable {
         }
     }
 
-    private void parseDateTime(String dateString) throws ParseException {
-        String[] dateTimeArr = dateString.split(" ");
+    /**
+     * Parses a DateTime string into formatted dates and times.
+     * @param dateTimeString Unformatted String containing the date and time.
+     * @throws ParseException
+     */
+    private void parseDateTime(String dateTimeString) throws ParseException {
+        String[] dateTimeArr = dateTimeString.split(" ");
 
         this.startDate = LocalDate.parse(dateTimeArr[0], dateFormatter());
         String[] timeRange = dateTimeArr[1].split("-");
@@ -73,6 +95,12 @@ public class Parser implements Parsable {
         }
     }
 
+    /**
+     * Parses Strings into Task objects.
+     * @param taskData String in the format type|isDone|desc|startDate(optional)|startTime(optional)|endTime(optional).
+     * @return Task object.
+     * @throws ParseException
+     */
     public static Task parseStringToTask(String taskData) throws ParseException {
         Task newTask;
         String type;
@@ -115,35 +143,67 @@ public class Parser implements Parsable {
         return newTask;
     }
 
+    /**
+     * DateTimeFormatter which can be used to validate the formats of date strings.
+     * @return DateTimeFormatter to validate date formats.
+     */
     public static DateTimeFormatter dateFormatter() {
-        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-YYYY]" +
-                "[dd-MM-YY]", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-yyyy]" +
+                "[dd-MM-yy]", Locale.ENGLISH);
     }
 
+    /**
+     * DateTimeFormatter which can be used to validate the formats of time strings.
+     * @return DateTimeFormatter to validate time formats.
+     */
     public static DateTimeFormatter timeFormatter() {
         return DateTimeFormatter.ofPattern("[HHmm][HH:mm][H]", Locale.ENGLISH);
     }
 
+    /**
+     * Gets the description of the parsed object.
+     * @return Description of Task.
+     */
     public String getDesc() {
         return this.desc;
     }
 
+    /**
+     * Gets the command of the parsed object.
+     * @return Command of Task.
+     */
     public String getCommandString() {
         return this.commandString;
     }
 
+    /**
+     * Gets the start date of the parsed object.
+     * @return Start Date of Task.
+     */
     public LocalDate getStartDate() {
         return this.startDate;
     }
 
+    /**
+     * Gets the start time of the parsed object.
+     * @return Start time of Task.
+     */
     public LocalTime getStartTime() {
         return this.startTime;
     }
 
+    /**
+     * Gets the end time of the parsed object.
+     * @return End time of the Task.
+     */
     public LocalTime getEndTime() {
         return this.endTime;
     }
 
+    /**
+     * Gets the index of the parsed object.
+     * @return Index of Task.
+     */
     public int getIndex() {
         return this.index;
     }

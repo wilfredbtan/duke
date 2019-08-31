@@ -10,15 +10,29 @@ import task.Todo;
 import tasklist.TaskListInterface;
 import ui.UserInterface;
 
+/**
+ * Command class that executes parsed commands given to it.
+ */
 public class Command {
 
+    /** Parsed object which contains variables that can be accessed by a command object.*/
     Parsable parsed;
 
+    /**
+     * Initialises a Command object.
+     * @param parsed
+     */
     public Command(Parsable parsed) {
         this.parsed = parsed;
     }
 
-    //main driver
+    /**
+     * Drives the system by processing the given commands and doing the corresponding actions.
+     * @param ui UserInterface which provides feedback to the user.
+     * @param taskList TaskList which carries out tasks which edit the task list.
+     * @param storage Storage which determines the location and format of saved data.
+     * @throws DukeException Exception is thrown when invalid or incomplete commands are given.
+     */
     public void execute(UserInterface ui, TaskListInterface taskList, StorageInterface storage) throws DukeException {
         switch (parsed.getCommandString()) {
         case "todo":

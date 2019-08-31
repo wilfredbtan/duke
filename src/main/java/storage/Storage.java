@@ -18,14 +18,27 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * Storage class which handles the loading and saving of Task data.
+ */
 public class Storage implements StorageInterface {
 
+    /** Filepath to load from and save to */
     private File file;
 
+    /**
+     * Initialises a Storage object.
+     * @param filePath File path to load to and save from.
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
     }
 
+    /**
+     * Loads a file and parses the data into Tasks which are stored in a TaskList.
+     * @return Tasklist that contains the loaded tasks.
+     * @throws IOException
+     */
     public TaskList load() throws IOException{
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -46,6 +59,10 @@ public class Storage implements StorageInterface {
         return new TaskList(tasks);
     }
 
+    /**
+     * Saves the data of the TaskList in a text file.
+     * @param taskList TaskList that is to be saved.
+     */
     public void save(TaskList taskList) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -62,6 +79,12 @@ public class Storage implements StorageInterface {
         }
     }
 
+    /**
+     * Formats the data of a Task in the format of type|isDone|desc|startDate(optional)|startTime(optional)|endTime
+     * (optional).
+     * @param currTask Task that will be formatted.
+     * @return String of the formatted Task data.
+     */
     public String formatData(Task currTask) {
         String data = "";
         data += currTask.getType() + "|";
