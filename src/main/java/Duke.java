@@ -33,8 +33,7 @@ public class Duke {
         }
     }
 
-public void run() {
-
+    public void run() {
         while (true) {
             try {
                 Scanner sc = new Scanner(System.in);

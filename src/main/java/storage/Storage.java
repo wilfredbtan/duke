@@ -26,7 +26,7 @@ public class Storage implements StorageInterface {
         this.file = new File(filePath);
     }
 
-    public TaskList load() throws IOException{
+    public TaskList load() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
 
         try {
@@ -73,14 +73,14 @@ public class Storage implements StorageInterface {
         DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
 
         if (currTask instanceof Deadline) {
-            data += "|" + ((Deadline) currTask).getDate().format(dateFormatter) +
-                    "|" + ((Deadline) currTask).getTime().format(timeFormatter);
+            data += "|" + ((Deadline) currTask).getDate().format(dateFormatter)
+                    + "|" + ((Deadline) currTask).getTime().format(timeFormatter);
         }
 
         if (currTask instanceof Event) {
-            data += "|" + ((Event) currTask).getStartDate().format(dateFormatter) +
-                    "|" + ((Event) currTask).getStartTime().format(timeFormatter) +
-                    "|" + ((Event) currTask).getEndTime().format(timeFormatter);
+            data += "|" + ((Event) currTask).getStartDate().format(dateFormatter)
+                    + "|" + ((Event) currTask).getStartTime().format(timeFormatter)
+                    + "|" + ((Event) currTask).getEndTime().format(timeFormatter);
         }
 
         return data;

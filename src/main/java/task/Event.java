@@ -3,7 +3,7 @@ package task;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Event extends Task{
+public class Event extends Task {
     private LocalDate startDate;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -29,7 +29,7 @@ public class Event extends Task{
     }
 
     public String toString() {
-        return "[E]" + super.toString() + "(at: " + startDate + " " + startTime +
-                "-" + endTime + ")";
+        return "[E]" + super.toString() + "(at: " + startDate + " " + startTime
+                + "-" + endTime + ")";
     }
 }

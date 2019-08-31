@@ -7,8 +7,8 @@ import tasklist.TaskListInterface;
 public class Ui implements UserInterface {
     public void showWelcome() {
         String welcomeString =
-                ("    Hello! I'm Duke\n") +
-                        ("    What can I do for you?\n");
+                ("    Hello! I'm Duke\n")
+                + ("    What can I do for you?\n");
         wrapWithLine(welcomeString);
     }
 
@@ -38,24 +38,24 @@ public class Ui implements UserInterface {
 
     public void showAddSuccess(Task addedTask, TaskListInterface taskList) {
         String successString =
-                ("    Got it. I've added this task:\n") +
-                ("      " + addedTask + "\n") +
-                ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
+                ("    Got it. I've added this task:\n")
+                + ("      " + addedTask + "\n")
+                + ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
         wrapWithLine(successString);
     }
 
     public void showDeleteSuccess(Task deletedTask, TaskListInterface taskList) {
         String deleteString =
-                ("    Noted. I've removed this task:\n") +
-                ("      " + deletedTask + "\n") +
-                ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
+                ("    Noted. I've removed this task:\n")
+                + ("      " + deletedTask + "\n")
+                + ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
         wrapWithLine(deleteString);
     }
 
     public void showDoneSuccess(Task doneTask) {
         String doneString =
-                ("     Nice! I've marked this task as done:\n") +
-                ("     " + doneTask + "\n");
+                ("     Nice! I've marked this task as done:\n")
+                + ("     " + doneTask + "\n");
         wrapWithLine(doneString);
     }
 

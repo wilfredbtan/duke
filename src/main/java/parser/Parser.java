@@ -24,7 +24,7 @@ public class Parser implements Parsable {
     private LocalTime endTime;
     private int index;
 
-    public Parser (String userInput) throws DukeException {
+    public Parser(String userInput) throws DukeException {
         this.userInput = userInput;
         parse();
     }
@@ -116,8 +116,8 @@ public class Parser implements Parsable {
     }
 
     public static DateTimeFormatter dateFormatter() {
-        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-YYYY]" +
-                "[dd-MM-YY]", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-YYYY]"
+                + "[dd-MM-YY]", Locale.ENGLISH);
     }
 
     public static DateTimeFormatter timeFormatter() {
