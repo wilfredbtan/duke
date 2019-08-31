@@ -1,7 +1,8 @@
 package ui;
 
+import exception.DukeException;
 import task.Task;
-import tasklist.TaskList;
+import tasklist.TaskListInterface;
 
 public class Ui implements UserInterface {
     public void showWelcome() {
@@ -15,7 +16,7 @@ public class Ui implements UserInterface {
         wrapWithLine("    Bye. Hope to see you again soon!\n");
     }
 
-    public void showList(TaskList taskList) {
+    public void showList(TaskListInterface taskList) throws DukeException {
         String listString = "";
         for (int i = 0; i < taskList.getSize(); i++) {
             listString += "    " + (i + 1) + ". " + taskList.get(i) + "\n";
@@ -35,7 +36,7 @@ public class Ui implements UserInterface {
         wrapWithLine("    \u2639  OOPS!! I'm sorry, but I don't know what that means :-(\n");
     }
 
-    public void showAddSuccess(Task addedTask, TaskList taskList) {
+    public void showAddSuccess(Task addedTask, TaskListInterface taskList) {
         String successString =
                 ("    Got it. I've added this task:\n") +
                 ("      " + addedTask + "\n") +
@@ -43,7 +44,7 @@ public class Ui implements UserInterface {
         wrapWithLine(successString);
     }
 
-    public void showDeleteSuccess(Task deletedTask, TaskList taskList) {
+    public void showDeleteSuccess(Task deletedTask, TaskListInterface taskList) {
         String deleteString =
                 ("    Noted. I've removed this task:\n") +
                 ("      " + deletedTask + "\n") +

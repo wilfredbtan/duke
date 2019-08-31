@@ -7,7 +7,7 @@ import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
-import tasklist.TaskList;
+import tasklist.TaskListInterface;
 import ui.UserInterface;
 
 public class Command {
@@ -19,7 +19,7 @@ public class Command {
     }
 
     //main driver
-    public void execute(UserInterface ui, TaskList taskList, StorageInterface storage) throws DukeException {
+    public void execute(UserInterface ui, TaskListInterface taskList, StorageInterface storage) throws DukeException {
         switch (parsed.getCommandString()) {
         case "todo":
             Task currTodo = new Todo(parsed.getDesc());
