@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class Storage {
+public class Storage implements StorageInterface {
 
     private File file;
 
@@ -49,8 +49,6 @@ public class Storage {
     public void save(TaskList taskList) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-
-
             for (Task task : taskList.getTasks()) {
                 String formattedData = formatData(task);
 
@@ -64,7 +62,7 @@ public class Storage {
         }
     }
 
-    private String formatData(Task currTask) {
+    public String formatData(Task currTask) {
         String data = "";
         data += currTask.getType() + "|";
         data += currTask.getDone() ? "1|" : "0|";
@@ -84,9 +82,8 @@ public class Storage {
                     "|" + ((Event) currTask).getStartTime().format(timeFormatter) +
                     "|" + ((Event) currTask).getEndTime().format(timeFormatter);
         }
+
         return data;
-
     }
-
 }
 

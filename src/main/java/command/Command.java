@@ -1,45 +1,43 @@
 package command;
 
 import exception.DukeException;
-import parser.Parser;
-import storage.Storage;
+import parser.Parsable;
+import storage.StorageInterface;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
 import tasklist.TaskList;
-import ui.Ui;
+import ui.UserInterface;
 
 public class Command {
 
-    Parser parsed;
+    Parsable parsed;
 
-    public Command(Parser parsed) {
+    public Command(Parsable parsed) {
         this.parsed = parsed;
     }
 
     //main driver
-    public void execute(Ui ui, TaskList taskList, Storage storage) throws DukeException {
-        ui = new Ui();
+    public void execute(UserInterface ui, TaskList taskList, StorageInterface storage) throws DukeException {
         switch (parsed.getCommandString()) {
         case "todo":
             Task currTodo = new Todo(parsed.getDesc());
             taskList.add(currTodo, storage);
+            ui.showAddSuccess(currTodo, taskList);
             break;
 
         case "deadline":
-            try {
-                Task currDeadline = new Deadline(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime());
-                taskList.add(currDeadline, storage);
-            } catch (NullPointerException e) {
-                throw new DukeException("    Sorry, that's an incomplete command. Failed to add task.", e);
-            }
+            Task currDeadline = new Deadline(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime());
+            taskList.add(currDeadline, storage);
+            ui.showAddSuccess(currDeadline, taskList);
             break;
 
         case "event":
             Task currEvent = new Event(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime(),
                     parsed.getEndTime());
             taskList.add(currEvent, storage);
+            ui.showAddSuccess(currEvent, taskList);
             break;
 
         case "delete":
@@ -58,7 +56,7 @@ public class Command {
                 taskList.setDone(doneTask, storage);
                 ui.showDoneSuccess(doneTask);
             } catch (IndexOutOfBoundsException e) {
-                throw new DukeException("     Selected item is out of bounds!. Task not marked as done.", e);
+                throw new DukeException("     Selected item is out of bounds! Task not deleted", e);
             }
             break;
         case "list":

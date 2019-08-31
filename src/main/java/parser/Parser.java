@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Parser {
+public class Parser implements Parsable {
 
     private String userInput;
     private String commandString;

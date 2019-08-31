@@ -3,7 +3,7 @@ package ui;
 import task.Task;
 import tasklist.TaskList;
 
-public class Ui {
+public class Ui implements UserInterface {
     public void showWelcome() {
         String welcomeString =
                 ("    Hello! I'm Duke\n") +
@@ -35,7 +35,7 @@ public class Ui {
         wrapWithLine("    \u2639  OOPS!! I'm sorry, but I don't know what that means :-(\n");
     }
 
-    public static void showAddSuccess(Task addedTask, TaskList taskList) {
+    public void showAddSuccess(Task addedTask, TaskList taskList) {
         String successString =
                 ("    Got it. I've added this task:\n") +
                 ("      " + addedTask + "\n") +

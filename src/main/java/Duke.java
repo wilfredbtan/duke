@@ -2,6 +2,7 @@ import command.Command;
 import exception.DukeException;
 import parser.Parser;
 import storage.Storage;
+import storage.StorageInterface;
 import tasklist.TaskList;
 import ui.Ui;
 
@@ -12,11 +13,11 @@ public class Duke {
 
     private Command command;
     private Ui ui;
-    private Storage storage;
+    private StorageInterface storage;
     private TaskList taskList;
 
     public static void main(String[] args) {
-        new Duke("data/tasks.txt").run();
+        new Duke("tasks.txt").run();
     }
 
     public Duke(String filePath) {

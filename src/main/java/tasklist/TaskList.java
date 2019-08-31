@@ -1,13 +1,12 @@
 package tasklist;
 
 import exception.DukeException;
-import storage.Storage;
+import storage.StorageInterface;
 import task.Task;
-import ui.Ui;
 
 import java.util.ArrayList;
 
-public class TaskList {
+public class TaskList implements TaskListInterface {
     private ArrayList<Task> tasks;
 
     public TaskList() {
@@ -18,24 +17,21 @@ public class TaskList {
         this.tasks = taskList;
     }
 
-    public void add(Task task, Storage storage) throws DukeException {
+    public void add(Task task, StorageInterface storage) throws DukeException {
         if (task.getDescription() != null) {
             tasks.add(task);
             storage.save(this);
-            Ui.showAddSuccess(task, this);
         } else {
-            System.out.println("   ____________________________________________________________");
-            System.out.println("    Sorry, that's an incomplete command. Failed to add task.");
-            System.out.println("   ____________________________________________________________");
+            throw new DukeException("    Sorry, that's an incomplete command. Failed to add task.", null);
         }
     }
 
-    public void remove(int index, Storage storage) {
+    public void remove(int index, StorageInterface storage) throws DukeException{
         tasks.remove(index);
         storage.save(this);
     }
 
-    public void setDone(Task task, Storage storage) {
+    public void setDone(Task task, StorageInterface storage) throws DukeException{
         task.setDone(true);
         storage.save(this);
     }
