@@ -1,6 +1,8 @@
 package parser;
 
+import command.Command;
 import exception.DukeException;
+import tasklist.TaskList;
 import ui.Ui;
 import task.Task;
 import task.Todo;
@@ -12,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -25,81 +28,73 @@ public class Parser {
     private String desc;
     /** Date when the task starts. */
     private LocalDate startDate;
-    /** Time whena the task starts. */
+    /** Time when the task starts. */
     private LocalTime startTime;
     /** Time when the task ends. */
     private LocalTime endTime;
     /** Index for deletion or marking tasks as done. */
     private int index;
+    /** Keyword for finding the task in a list. */
     private String keyword;
 
-    /**
-     * Initialises the Parser object.
-     * @param userInput Input provided by the user.
-     * @throws DukeException Exception is thrown when an invalid user input is received. For example, user input may
-     *      not be in the right format or may be missing components required for certain commands.
-     */
-    public Parser(String userInput) throws DukeException {
-        parse(userInput);
-    }
 
     /**
-     * Parses user input into portions which can used to carry out commands.
+     * Parses user input into a Command object containing its required components such as description, date and time
+     *      according to the command given.
      * @param userInput Input provided by the user.
      * @throws DukeException Exception is thrown when there is an invalid format provided. For example,
      *      missing date / time or incorrect date / time format.
      */
-    private void parse(String userInput) throws DukeException {
-        Ui ui = new Ui();
-
+    public static Command parse(String userInput) throws DukeException {
         Scanner sc = new Scanner(userInput);
+        Command newCommand = new Command();
+        String commandString = sc.next();
+        newCommand.addCommandString(commandString);
 
-        this.commandString = sc.next();
-
-        if (commandString.equals("list") || commandString.equals("bye")) {
-            return;
-        }
-
-        if (commandString.equals("find")) {
-            this.keyword = sc.nextLine();
-        }
-
-        if (sc.hasNextInt()) {
-            this.index = sc.nextInt();
-        }
-
-        if (sc.hasNextLine()) {
-            String[] descriptionAndDate = sc.nextLine().split("/", 2);
-            this.desc = descriptionAndDate[0];
-
+        switch (commandString) {
+        case "find":
+            newCommand.addKeyword(sc.next());
+            break;
+        case "todo":
+            newCommand.addDesc(sc.next());
+            break;
+        case "deadline":
+            //Fallthrough
+        case "event":
             try {
-                if (commandString.equals("deadline") || commandString.equals("event")) {
-                    parseDateTime(descriptionAndDate[1]);
+                String[] descriptionAndDate = sc.nextLine().split("/", 2);
+                newCommand.addDesc(descriptionAndDate[0]);
+
+                String[] dateTimeArr = descriptionAndDate[1].split(" ");
+
+                newCommand.addStartDate(LocalDate.parse(dateTimeArr[0], dateFormatter()));
+                String[] timeRange = dateTimeArr[1].split("-");
+                if (timeRange.length <= 1) {
+                    newCommand.addStartTime(LocalTime.parse(dateTimeArr[1], timeFormatter()));
+                } else {
+                    newCommand.addStartTime(LocalTime.parse(timeRange[0], timeFormatter()));
+                    newCommand.addEndTime(LocalTime.parse(timeRange[1], timeFormatter()));
                 }
-            } catch (ParseException e) {
-                throw new DukeException("    Parse exception Description", e);
             } catch (ArrayIndexOutOfBoundsException e) {
-                throw new DukeException("    Please include a date and time", e);
+                throw new DukeException("    Incomplete command, please include a date and time", e);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("    Incomplete command, please add a description, date and time.", e);
             }
+            break;
+        case "delete":
+            //Fallthrough
+        case "done":
+            newCommand.addIndex(sc.nextInt());
+            break;
+        case "list":
+            //Fallthrough
+        case "bye":
+            break;
+        default:
+            throw new DukeException("     ☹ OOPS!! I'm sorry, but I don't know what that means :-(", null);
         }
-    }
 
-    /**
-     * Parses a DateTime string into formatted dates and times.
-     * @param dateTimeString Unformatted String containing the date and time.
-     * @throws ParseException Exception is thrown when an incorrect date / time string is provided.
-     */
-    private void parseDateTime(String dateTimeString) throws ParseException {
-        String[] dateTimeArr = dateTimeString.split(" ");
-
-        this.startDate = LocalDate.parse(dateTimeArr[0], dateFormatter());
-        String[] timeRange = dateTimeArr[1].split("-");
-        if (timeRange.length <= 1) {
-            this.startTime = LocalTime.parse(dateTimeArr[1], timeFormatter());
-        } else {
-            this.startTime = LocalTime.parse(timeRange[0], timeFormatter());
-            this.endTime = LocalTime.parse(timeRange[1], timeFormatter());
-        }
+        return newCommand;
     }
 
     /**
@@ -167,59 +162,4 @@ public class Parser {
         return DateTimeFormatter.ofPattern("[HHmm][HH:mm][H]", Locale.ENGLISH);
     }
 
-    /**
-     * Gets the description of the parsed object.
-     * @return Description of Task.
-     */
-    public String getDesc() {
-        return this.desc;
-    }
-
-    /**
-     * Gets the command of the parsed object.
-     * @return Command of Task.
-     */
-    public String getCommandString() {
-        return this.commandString;
-    }
-
-    /**
-     * Gets the start date of the parsed object.
-     * @return Start Date of Task.
-     */
-    public LocalDate getStartDate() {
-        return this.startDate;
-    }
-
-    /**
-     * Gets the start time of the parsed object.
-     * @return Start time of Task.
-     */
-    public LocalTime getStartTime() {
-        return this.startTime;
-    }
-
-    /**
-     * Gets the end time of the parsed object.
-     * @return End time of the Task.
-     */
-    public LocalTime getEndTime() {
-        return this.endTime;
-    }
-
-    /**
-     * Gets the index of the parsed object.
-     * @return Index of Task.
-     */
-    public int getIndex() {
-        return this.index;
-    }
-
-    /**
-     * Gets the keyword of the parsed object.
-     * @return Keyword of the parsed object.
-     */
-    public String getKeyword() {
-        return this.keyword;
-    }
 }

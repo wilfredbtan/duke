@@ -57,8 +57,7 @@ public class Duke {
             try {
                 Scanner sc = new Scanner(System.in);
                 String userInput = sc.nextLine();
-                Parser parsed = new Parser(userInput);
-                command = new Command(parsed);
+                command = Parser.parse(userInput);
 
                 ui.showLine();
                 command.execute(ui, taskList, storage);

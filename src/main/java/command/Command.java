@@ -1,7 +1,6 @@
 package command;
 
 import exception.DukeException;
-import parser.Parser;
 import storage.StorageInterface;
 import task.Deadline;
 import task.Event;
@@ -10,21 +9,28 @@ import task.Todo;
 import tasklist.TaskList;
 import ui.Ui;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 /**
  * Command class that executes parsed commands given to it.
  */
 public class Command {
 
-    /** Parsed object which contains variables that can be accessed by a command object.*/
-    Parser parsed;
-
-    /**
-     * Initialises a Command object.
-     * @param parsed Parsed object which contains variables that can be accessed by a command object.
-     */
-    public Command(Parser parsed) {
-        this.parsed = parsed;
-    }
+    /** Command portion of the input. */
+    private String commandString;
+    /** Description portion of the input. */
+    private String desc;
+    /** Date when the task starts. */
+    private LocalDate startDate;
+    /** Time when the task starts. */
+    private LocalTime startTime;
+    /** Time when the task ends. */
+    private LocalTime endTime;
+    /** Index for deletion or marking tasks as done. */
+    private int index;
+    /** Keyword for finding the task in a list. */
+    private String keyword;
 
     /**
      * Drives the system by processing the given commands and doing the corresponding actions.
@@ -34,36 +40,36 @@ public class Command {
      * @throws DukeException Exception is thrown when invalid or incomplete commands are given.
      */
     public void execute(Ui ui, TaskList taskList, StorageInterface storage) throws DukeException {
-        switch (parsed.getCommandString()) {
+        switch (getCommandString()) {
         case "find":
-            TaskList filteredList = taskList.find(parsed.getKeyword());
+            TaskList filteredList = taskList.find(getKeyword());
             ui.showFindSuccess();
             ui.showList(filteredList);
             break;
 
         case "todo":
-            Task currTodo = new Todo(parsed.getDesc());
+            Task currTodo = new Todo(getDesc());
             taskList.add(currTodo, storage);
             ui.showAddSuccess(currTodo, taskList);
             break;
 
         case "deadline":
-            Task currDeadline = new Deadline(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime());
+            Task currDeadline = new Deadline(getDesc(), getStartDate(), getStartTime());
             taskList.add(currDeadline, storage);
             ui.showAddSuccess(currDeadline, taskList);
             break;
 
         case "event":
-            Task currEvent = new Event(parsed.getDesc(), parsed.getStartDate(), parsed.getStartTime(),
-                    parsed.getEndTime());
+            Task currEvent = new Event(getDesc(), getStartDate(), getStartTime(),
+                    getEndTime());
             taskList.add(currEvent, storage);
             ui.showAddSuccess(currEvent, taskList);
             break;
 
         case "delete":
             try {
-                Task deletedTask = taskList.get(parsed.getIndex() - 1);
-                taskList.remove(parsed.getIndex() - 1, storage);
+                Task deletedTask = taskList.get(getIndex() - 1);
+                taskList.remove(getIndex() - 1, storage);
                 ui.showDeleteSuccess(deletedTask, taskList);
             } catch (IndexOutOfBoundsException e) {
                 throw new DukeException("     Deleted item is out of bounds! Task not deleted", e);
@@ -72,7 +78,7 @@ public class Command {
 
         case "done":
             try {
-                Task doneTask = taskList.get(parsed.getIndex() - 1);
+                Task doneTask = taskList.get(getIndex() - 1);
                 taskList.setDone(doneTask, storage);
                 ui.showDoneSuccess(doneTask);
             } catch (IndexOutOfBoundsException e) {
@@ -89,6 +95,125 @@ public class Command {
         default:
             ui.showInvalidInputError();
         }
+    }
+
+    /**
+     * Adds a command to the current Command object and generates a new Command for method chaining.
+     * @return Command object with command added.
+     */
+    public Command addCommandString(String commandString) {
+        this.commandString = commandString;
+        return this;
+    }
+
+    /**
+     * Adds a description to the current Command object and generates a new Command for method chaining.
+     * @return Command object with description added.
+     */
+    public Command addDesc(String desc) {
+        this.desc = desc;
+        return this;
+    }
+
+    /**
+     * Adds a start date to the current Command object and generates a new Command for method chaining.
+     * @return Command object with start date added.
+     */
+    public Command addStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    /**
+     * Adds a start time to the current Command object and generates a new Command for method chaining.
+     * @return Command object with start time added.
+     */
+    public Command addStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    /**
+     * Adds an end time to the current Command object and generates a new Command for method chaining.
+     * @return Command object with end time added.
+     */
+    public Command addEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+        return this;
+    }
+
+    /**
+     * Adds an index to the current Command object and generates a new Command for method chaining.
+     * @return Command object with index added.
+     */
+    public Command addIndex(int index) {
+        this.index = index;
+        return this;
+    }
+
+    /**
+     * Adds a keyword to the current Command object and generates a new Command for method chaining.
+     * @return Command object with keyword added.
+     */
+    public Command addKeyword(String keyword) {
+        this.keyword = keyword;
+        return this;
+    }
+
+    /**
+     * Gets the command of the Command object.
+     * @return Command of Task.
+     */
+    public String getCommandString() {
+        return this.commandString;
+    }
+
+    /**
+     * Gets the description of the Command object.
+     * @return Description of Task.
+     */
+    public String getDesc() {
+        return this.desc;
+    }
+
+    /**
+     * Gets the start date of the Command object.
+     * @return Start Date of Task.
+     */
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
+    /**
+     * Gets the start time of the Command object.
+     * @return Start time of Task.
+     */
+    public LocalTime getStartTime() {
+        return this.startTime;
+    }
+
+    /**
+     * Gets the end time of the Command object.
+     * @return End time of the Task.
+     */
+    public LocalTime getEndTime() {
+        return this.endTime;
+    }
+
+    /**
+     * Gets the index of the Command object.
+     * @return Index of Task.
+     */
+    public int getIndex() {
+        return this.index;
+    }
+
+    /**
+     * Gets the keyword of the Command object.
+     * @return Keyword of the Command object.
+     */
+    public String getKeyword() {
+        return this.keyword;
     }
 
 }
