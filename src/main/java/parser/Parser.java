@@ -31,6 +31,7 @@ public class Parser implements Parsable {
     private LocalTime endTime;
     /** Index for deletion or marking tasks as done. */
     private int index;
+    private String keyword;
 
     /**
      * Initialises the Parser object.
@@ -57,6 +58,10 @@ public class Parser implements Parsable {
 
         if (commandString.equals("list") || commandString.equals("bye")) {
             return;
+        }
+
+        if (commandString.equals("find")) {
+            this.keyword = sc.nextLine();
         }
 
         if (sc.hasNextInt()) {
@@ -208,5 +213,13 @@ public class Parser implements Parsable {
      */
     public int getIndex() {
         return this.index;
+    }
+
+    /**
+     * Gets the keyword of the parsed object.
+     * @return Keyword of the parsed object.
+     */
+    public String getKeyword() {
+        return this.keyword;
     }
 }

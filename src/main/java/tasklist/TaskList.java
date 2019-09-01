@@ -5,6 +5,7 @@ import storage.StorageInterface;
 import task.Task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * TaskList class which handles the commands related to the task list such as add and remove.
@@ -26,6 +27,20 @@ public class TaskList implements TaskListInterface {
      */
     public TaskList(ArrayList<Task> taskList) {
         this.tasks = taskList;
+    }
+
+    /**
+     * Finds a task from the taskList.
+     * @param keyword Keyword that user is searching for in task's description. For example, "testString" contains
+     *                the "test" keyword.
+     * @return TaskList that contains the tasks that were found.
+     * @throws DukeException
+     */
+    public TaskListInterface find(String keyword) throws DukeException {
+        ArrayList<Task> filteredList =
+                tasks.stream().filter(t -> t.getDescription().contains(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new TaskList(filteredList);
     }
 
     /**
