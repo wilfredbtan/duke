@@ -2,28 +2,28 @@ package ui;
 
 import exception.DukeException;
 import task.Task;
-import tasklist.TaskListInterface;
+import tasklist.TaskList;
 
 /**
  * Ui class which generates feedback to the user.
  */
-public class Ui implements UserInterface {
+public class Ui {
 
     /**
      * Shows a welcome message.
      */
     public void showWelcome() {
-        String welcomeString =
-                ("    Hello! I'm Duke\n")
-                + ("    What can I do for you?\n");
-        wrapWithLine(welcomeString);
+        showLine();
+        System.out.println("    Hello! I'm Duke\n"
+                + "    What can I do for you?");
+        showLine();
     }
 
     /**
      * Shows a good bye message.
      */
     public void showBye() {
-        wrapWithLine("    Bye. Hope to see you again soon!\n");
+        System.out.println("    Bye. Hope to see you again soon!");
     }
 
     /**
@@ -31,12 +31,10 @@ public class Ui implements UserInterface {
      * @param taskList TaskList that is to be shown.
      * @throws DukeException Throws an exception if it is an invalid list or there exists and invalid task in the list.
      */
-    public void showList(TaskListInterface taskList) throws DukeException {
-        String listString = "";
+    public void showList(TaskList taskList) throws DukeException {
         for (int i = 0; i < taskList.getSize(); i++) {
-            listString += "    " + (i + 1) + ". " + taskList.get(i) + "\n";
+            System.out.println("    " + (i + 1) + ". " + taskList.get(i));
         }
-        wrapWithLine(listString);
     }
 
     /**
@@ -44,21 +42,25 @@ public class Ui implements UserInterface {
      * @param errorMessage Error message that will be printed.
      */
     public void showError(String errorMessage) {
-        wrapWithLine(errorMessage);
+        System.out.println(errorMessage);
     }
 
     /**
      * Shows the loading error message.
      */
     public void showLoadingError() {
-        wrapWithLine("    No existing data. Duke initialised with an empty TaskList\n");
+        System.out.println("    No existing data. Duke initialised with an empty TaskList");
     }
 
     /**
      * Shows the invalid input error message.
      */
     public void showInvalidInputError() {
-        wrapWithLine("    \u2639  OOPS!! I'm sorry, but I don't know what that means :-(\n");
+        System.out.println("     ☹ OOPS!! I'm sorry, but I don't know what that means :-(");
+    }
+
+    public void showFindSuccess() {
+        System.out.println("     Here are the matching tasks in your list:");
     }
 
     /**
@@ -66,12 +68,11 @@ public class Ui implements UserInterface {
      * @param addedTask Task that is to be added.
      * @param taskList TaskList that the Task is to be added to.
      */
-    public void showAddSuccess(Task addedTask, TaskListInterface taskList) {
-        String successString =
-                ("    Got it. I've added this task:\n")
-                + ("      " + addedTask + "\n")
-                + ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
-        wrapWithLine(successString);
+    public void showAddSuccess(Task addedTask, TaskList taskList) {
+        System.out.println(
+                "    Got it. I've added this task:\n"
+                + "      " + addedTask + "\n"
+                + "    Now you have " + taskList.getSize() + " tasks in this list.");
     }
 
     /**
@@ -79,12 +80,11 @@ public class Ui implements UserInterface {
      * @param deletedTask Task that is to be deleted.
      * @param taskList TaskList that the Task is to be deleted from.
      */
-    public void showDeleteSuccess(Task deletedTask, TaskListInterface taskList) {
-        String deleteString =
-                ("    Noted. I've removed this task:\n")
-                + ("      " + deletedTask + "\n")
-                + ("    Now you have " + taskList.getSize() + " tasks in this list.\n");
-        wrapWithLine(deleteString);
+    public void showDeleteSuccess(Task deletedTask, TaskList taskList) {
+        System.out.println(
+                "    Noted. I've removed this task:\n"
+                + "      " + deletedTask + "\n"
+                + "    Now you have " + taskList.getSize() + " tasks in this list.");
     }
 
     /**
@@ -92,27 +92,15 @@ public class Ui implements UserInterface {
      * @param doneTask Task that is to be marked as done.
      */
     public void showDoneSuccess(Task doneTask) {
-        String doneString =
-                ("     Nice! I've marked this task as done:\n")
-                + ("     " + doneTask + "\n");
-        wrapWithLine(doneString);
+        System.out.println(
+                "     Nice! I've marked this task as done:\n"
+                + "     " + doneTask);
     }
 
     /**
      * Shows a standard line string.
      */
-    public static void showLine() {
+    public void showLine() {
         System.out.println("   ____________________________________________________________");
     }
-
-    /**
-     * Wraps strings with surrounding lines to standardise system output.
-     * @param input Input string that is to be formatted.
-     */
-    public static void wrapWithLine(String input) {
-        showLine();
-        System.out.print(input);
-        showLine();
-    }
-
 }

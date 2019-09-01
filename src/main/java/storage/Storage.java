@@ -23,7 +23,7 @@ import java.util.Locale;
  */
 public class Storage implements StorageInterface {
 
-    /** Filepath to load from and save to */
+    /** Filepath to load from and save to. */
     private File file;
 
     /**
@@ -94,7 +94,7 @@ public class Storage implements StorageInterface {
 
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
-        DateTimeFormatter timeFormatter= DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
 
         if (currTask instanceof Deadline) {
             data += "|" + ((Deadline) currTask).getDate().format(dateFormatter)

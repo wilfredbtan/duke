@@ -5,16 +5,16 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '5.1.0'
 }
 
-//sourceSets.main.resources { srcDirs = ["src/main/java"]; include "**/*.*" }
+sourceSets.main.resources { srcDirs = ["src/main/java"]; include "**/*.*" }
 
-sourceSets {
-    main {
-        resources {
-            srcDirs = ['src/main/java'];
-            include "**/*.*"
-        }
-    }
-}
+//sourceSets {
+//    main {
+//        resources {
+//            srcDirs = ['src/main/java'];
+//            include "**/*.*"
+//        }
+//    }
+//}
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0'

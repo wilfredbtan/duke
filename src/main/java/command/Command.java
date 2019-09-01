@@ -1,15 +1,14 @@
 package command;
 
 import exception.DukeException;
-import parser.Parsable;
+import parser.Parser;
 import storage.StorageInterface;
 import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
 import tasklist.TaskList;
-import tasklist.TaskListInterface;
-import ui.UserInterface;
+import ui.Ui;
 
 /**
  * Command class that executes parsed commands given to it.
@@ -17,13 +16,13 @@ import ui.UserInterface;
 public class Command {
 
     /** Parsed object which contains variables that can be accessed by a command object.*/
-    Parsable parsed;
+    Parser parsed;
 
     /**
      * Initialises a Command object.
      * @param parsed Parsed object which contains variables that can be accessed by a command object.
      */
-    public Command(Parsable parsed) {
+    public Command(Parser parsed) {
         this.parsed = parsed;
     }
 
@@ -34,10 +33,11 @@ public class Command {
      * @param storage Storage which determines the location and format of saved data.
      * @throws DukeException Exception is thrown when invalid or incomplete commands are given.
      */
-    public void execute(UserInterface ui, TaskListInterface taskList, StorageInterface storage) throws DukeException {
+    public void execute(Ui ui, TaskList taskList, StorageInterface storage) throws DukeException {
         switch (parsed.getCommandString()) {
         case "find":
-            TaskListInterface filteredList = taskList.find(parsed.getKeyword());
+            TaskList filteredList = taskList.find(parsed.getKeyword());
+            ui.showFindSuccess();
             ui.showList(filteredList);
             break;
 

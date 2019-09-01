@@ -14,16 +14,29 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestTaskList {
+/**
+ * TaskListTest class used to test the functionality of TaskList.
+ */
+public class TaskListTest {
 
+    /** Storage stub with hard-coded file paths to pass as parameter for test methods. */
     private StorageInterface storageStub = new StorageStub();
 
+    /**
+     * Creates an ArrayList with the provided task.
+     * @param task Task that the ArrayList will be created with.
+     * @return ArrayList of the task provided.
+     */
     public ArrayList<Task> createList(Task task) {
         ArrayList<Task> newList = new ArrayList<>();
         newList.add(task);
         return newList;
     }
 
+    /**
+     * Tests the success of adding Todo / Deadline / Event tasks to a TaskList.
+     * @throws DukeException Exception is raised when an invalid task is added.
+     */
     @Test
     public void add_tasks_success() throws DukeException {
         Task todoStub = new Todo(" testString");
@@ -45,11 +58,19 @@ public class TestTaskList {
         assertEquals(testEventList, eventTaskList.getTasks());
     }
 
+    /**
+     * Generates a LocalDate constant which can be used for testing.
+     * @return LocalDate stub used for testing.
+     */
     public static LocalDate dateStub() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
         return LocalDate.parse("26/11/1996", formatter);
     }
 
+    /**
+     * Generates a LocalTime constant which can be used for testing.
+     * @return LocalTime stub used for testing.
+     */
     public static LocalTime timeStub() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
         return LocalTime.parse("1234", formatter);

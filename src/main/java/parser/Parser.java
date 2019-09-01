@@ -17,7 +17,7 @@ import java.util.Scanner;
 /**
  * Parser class used to process Strings into variables that the Command object can execute.
  */
-public class Parser implements Parsable {
+public class Parser {
 
     /** Command portion of the input. */
     private String commandString;
@@ -37,9 +37,9 @@ public class Parser implements Parsable {
      * Initialises the Parser object.
      * @param userInput Input provided by the user.
      * @throws DukeException Exception is thrown when an invalid user input is received. For example, user input may
-     * not be in the right format or may be missing components required for certain commands.
+     *      not be in the right format or may be missing components required for certain commands.
      */
-    public Parser (String userInput) throws DukeException {
+    public Parser(String userInput) throws DukeException {
         parse(userInput);
     }
 
@@ -47,7 +47,7 @@ public class Parser implements Parsable {
      * Parses user input into portions which can used to carry out commands.
      * @param userInput Input provided by the user.
      * @throws DukeException Exception is thrown when there is an invalid format provided. For example,
-     * missing date / time or incorrect date / time format.
+     *      missing date / time or incorrect date / time format.
      */
     private void parse(String userInput) throws DukeException {
         Ui ui = new Ui();
@@ -155,8 +155,8 @@ public class Parser implements Parsable {
      * @return DateTimeFormatter to validate date formats.
      */
     public static DateTimeFormatter dateFormatter() {
-        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-YYYY]"
-                + "[dd-MM-YY]", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-yyyy]"
+                + "[dd-MM-yy]", Locale.ENGLISH);
     }
 
     /**

@@ -33,7 +33,7 @@ public class Duke {
         new Duke("tasks.txt").run();
     }
 
-    /** Initialises a Duke object with a filePath and loads existing tasks if any
+    /** Initialises a Duke object with a filePath and loads existing tasks if any.
      * @param filePath Filepath where tasks will be saved and loaded from.
      */
     public Duke(String filePath) {
@@ -59,9 +59,13 @@ public class Duke {
                 String userInput = sc.nextLine();
                 Parser parsed = new Parser(userInput);
                 command = new Command(parsed);
+
+                ui.showLine();
                 command.execute(ui, taskList, storage);
             } catch (DukeException e) {
                 ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
             }
         }
     }

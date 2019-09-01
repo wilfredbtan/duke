@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 /**
  * TaskList class which handles the commands related to the task list such as add and remove.
  */
-public class TaskList implements TaskListInterface {
-    /** List of tasks*/
+public class TaskList {
+    /** List of tasks. */
     private ArrayList<Task> tasks;
 
     /**
@@ -34,9 +34,8 @@ public class TaskList implements TaskListInterface {
      * @param keyword Keyword that user is searching for in task's description. For example, "testString" contains
      *                the "test" keyword.
      * @return TaskList that contains the tasks that were found.
-     * @throws DukeException
      */
-    public TaskListInterface find(String keyword) throws DukeException {
+    public TaskList find(String keyword) {
         ArrayList<Task> filteredList =
                 tasks.stream().filter(t -> t.getDescription().contains(keyword))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -48,7 +47,7 @@ public class TaskList implements TaskListInterface {
      * @param task Task that is to be added to the list.
      * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid task is added. For example, an incomplete command or
-     * tasks with null description.
+     *      tasks with null description.
      */
     public void add(Task task, StorageInterface storage) throws DukeException {
         if (task.getDescription() != null) {
@@ -65,7 +64,7 @@ public class TaskList implements TaskListInterface {
      * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
-    public void remove(int index, StorageInterface storage) throws DukeException{
+    public void remove(int index, StorageInterface storage) {
         tasks.remove(index);
         storage.save(this);
     }
@@ -76,7 +75,7 @@ public class TaskList implements TaskListInterface {
      * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
-    public void setDone(Task task, StorageInterface storage) throws DukeException{
+    public void setDone(Task task, StorageInterface storage) {
         task.setDone(true);
         storage.save(this);
     }

@@ -12,6 +12,6 @@ public class DukeException extends Exception {
      * @param err Throwable which is raised by the exception caught.
      */
     public DukeException(String errorMessage, Throwable err) {
-        super(errorMessage + "\n", err);
+        super(errorMessage, err);
     }
 }

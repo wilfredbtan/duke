@@ -8,9 +8,9 @@ import java.time.LocalTime;
  */
 public class Deadline extends Task {
 
-    /** Date of the Deadline*/
+    /** Date of the Deadline. */
     private LocalDate date;
-    /** Time of the Deadline*/
+    /** Time of the Deadline. */
     private LocalTime time;
 
     /**
