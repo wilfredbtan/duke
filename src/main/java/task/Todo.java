@@ -3,7 +3,7 @@ package task;
 /**
  * Todo class indicated with type "T" which contains a description.
  */
-public class Todo extends Task{
+public class Todo extends Task {
 
     /**
      * Initialises a Todo class.

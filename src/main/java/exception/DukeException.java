@@ -4,7 +4,7 @@ package exception;
  * DukeException class which can be thrown when exceptions related to Duke are raised. Will eventually be caught by
  * Duke Object.
  */
-public class DukeException extends Exception{
+public class DukeException extends Exception {
 
     /**
      * Initialises a DukeException object.

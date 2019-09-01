@@ -27,19 +27,18 @@ public class TestTaskList {
     @Test
     public void add_tasks_success() throws DukeException {
         Task todoStub = new Todo(" testString");
-        Task deadlineStub = new Deadline(" testString ", dateStub(), timeStub());
-        Task eventStub = new Event(" testString ", dateStub(), timeStub(), timeStub());
-
         ArrayList<Task> testTodoList = createList(todoStub);
         TaskList todoTaskList = new TaskList();
         todoTaskList.add(todoStub, storageStub);
         assertEquals(testTodoList, todoTaskList.getTasks());
 
+        Task deadlineStub = new Deadline(" testString ", dateStub(), timeStub());
         ArrayList<Task> testDeadlineList = createList(deadlineStub);
         TaskList deadlineTaskList = new TaskList();
         deadlineTaskList.add(deadlineStub, storageStub);
         assertEquals(testDeadlineList, deadlineTaskList.getTasks());
 
+        Task eventStub = new Event(" testString ", dateStub(), timeStub(), timeStub());
         ArrayList<Task> testEventList = createList(eventStub);
         TaskList eventTaskList = new TaskList();
         eventTaskList.add(eventStub, storageStub);

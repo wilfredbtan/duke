@@ -7,7 +7,7 @@ import java.time.LocalTime;
  * Event class indicated with type "E" which contains a start date, start time and end time on top of the other
  * components that Task has.
  */
-public class Event extends Task{
+public class Event extends Task {
     /** Date when the event starts. */
     private LocalDate startDate;
     /** Time when the event starts. */
@@ -59,7 +59,7 @@ public class Event extends Task{
      * @return String in the given format.
      */
     public String toString() {
-        return "[E]" + super.toString() + "(at: " + startDate + " " + startTime +
-                "-" + endTime + ")";
+        return "[E]" + super.toString() + "(at: " + startDate + " " + startTime
+                + "-" + endTime + ")";
     }
 }

@@ -53,7 +53,6 @@ public class Duke {
      * by the Parser and fed to the command object. Error messages will be shown if invalid commands are given.
      */
     public void run() {
-
         while (true) {
             try {
                 Scanner sc = new Scanner(System.in);

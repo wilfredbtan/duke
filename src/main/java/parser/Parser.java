@@ -150,8 +150,8 @@ public class Parser implements Parsable {
      * @return DateTimeFormatter to validate date formats.
      */
     public static DateTimeFormatter dateFormatter() {
-        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-yyyy]" +
-                "[dd-MM-yy]", Locale.ENGLISH);
+        return DateTimeFormatter.ofPattern("[dd/MM/yyyy][dd/MM/yy][dd-MM-YYYY]"
+                + "[dd-MM-YY]", Locale.ENGLISH);
     }
 
     /**
