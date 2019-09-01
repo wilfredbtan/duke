@@ -7,6 +7,7 @@ import task.Deadline;
 import task.Event;
 import task.Task;
 import task.Todo;
+import tasklist.TaskList;
 import tasklist.TaskListInterface;
 import ui.UserInterface;
 
@@ -21,6 +22,11 @@ public class Command {
     //main driver
     public void execute(UserInterface ui, TaskListInterface taskList, StorageInterface storage) throws DukeException {
         switch (parsed.getCommandString()) {
+        case "find":
+            TaskListInterface filteredList = taskList.find(parsed.getKeyword());
+            ui.showList(filteredList);
+            break;
+
         case "todo":
             Task currTodo = new Todo(parsed.getDesc());
             taskList.add(currTodo, storage);

@@ -23,6 +23,7 @@ public class Parser implements Parsable {
     private LocalTime startTime;
     private LocalTime endTime;
     private int index;
+    private String keyword;
 
     public Parser (String userInput) throws DukeException {
         this.userInput = userInput;
@@ -38,6 +39,10 @@ public class Parser implements Parsable {
 
         if (commandString.equals("list") || commandString.equals("bye")) {
             return;
+        }
+
+        if (commandString.equals("find")) {
+            this.keyword = sc.nextLine();
         }
 
         if (sc.hasNextInt()) {
@@ -146,5 +151,9 @@ public class Parser implements Parsable {
 
     public int getIndex() {
         return this.index;
+    }
+
+    public String getKeyword() {
+        return this.keyword;
     }
 }

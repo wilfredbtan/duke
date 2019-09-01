@@ -17,4 +17,6 @@ public interface Parsable {
 
     public int getIndex();
 
+    public String getKeyword();
+
 }

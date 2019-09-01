@@ -5,8 +5,10 @@ import storage.StorageInterface;
 import task.Task;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class TaskList implements TaskListInterface {
+
     private ArrayList<Task> tasks;
 
     public TaskList() {
@@ -15,6 +17,13 @@ public class TaskList implements TaskListInterface {
 
     public TaskList(ArrayList<Task> taskList) {
         this.tasks = taskList;
+    }
+
+    public TaskListInterface find(String keyword) throws DukeException {
+        ArrayList<Task> filteredList =
+                tasks.stream().filter(t -> t.getDescription().contains(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
+        return new TaskList(filteredList);
     }
 
     public void add(Task task, StorageInterface storage) throws DukeException {
