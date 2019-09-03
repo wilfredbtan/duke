@@ -2,8 +2,6 @@ package parser;
 
 import command.Command;
 import exception.DukeException;
-import tasklist.TaskList;
-import ui.Ui;
 import task.Task;
 import task.Todo;
 import task.Deadline;
