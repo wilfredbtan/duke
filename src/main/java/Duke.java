@@ -8,17 +8,12 @@ import ui.Ui;
 
 import java.io.IOException;
 import java.util.Scanner;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 /**
  * Main class used to drive the program.
  * @author Wilfred Bradley Tan, A0185405E.
  */
-
-public class Duke extends Application {
+public class Duke {
 
     /** Object used to execute commands. */
     private Command command = new Command();
@@ -64,13 +59,11 @@ public class Duke extends Application {
         }
     }
 
-    @Override
-    public void start(Stage stage) {
-        Label helloWorld = new Label("Hello World!"); // Creating a new Label control
-        Scene scene = new Scene(helloWorld); // Setting the scene to be our Label
-
-        stage.setScene(scene); // Setting the stage to show our screen
-        stage.show(); // Render the stage.
+    /**
+     * You should have your own function to generate a response to user input.
+     * Replace this stub with your completed method.
+     */
+    String getResponse(String input) {
+        return "Duke heard: " + input;
     }
-
 }
