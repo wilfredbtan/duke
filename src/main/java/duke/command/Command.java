@@ -1,13 +1,13 @@
-package command;
+package duke.command;
 
-import exception.DukeException;
-import storage.StorageInterface;
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.Todo;
-import tasklist.TaskList;
-import ui.Ui;
+import duke.exception.DukeException;
+import duke.storage.StorageInterface;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+import duke.tasklist.TaskList;
+import duke.ui.UiManager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -39,7 +39,7 @@ public class Command {
      * @param storage Storage which determines the location and format of saved data.
      * @throws DukeException Exception is thrown when invalid or incomplete commands are given.
      */
-    public void execute(Ui ui, TaskList taskList, StorageInterface storage) throws DukeException {
+    public void execute(UiManager ui, TaskList taskList, StorageInterface storage) throws DukeException {
         switch (getCommandString()) {
         case "find":
             TaskList filteredList = taskList.find(getKeyword());

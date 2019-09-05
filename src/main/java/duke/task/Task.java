@@ -1,4 +1,4 @@
-package task;
+package duke.task;
 
 /**
  * Task class which can be extended to create sub tasks.

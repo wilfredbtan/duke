@@ -1,4 +1,4 @@
-package task;
+package duke.task;
 
 /**
  * Todo class indicated with type "T" which contains a description.

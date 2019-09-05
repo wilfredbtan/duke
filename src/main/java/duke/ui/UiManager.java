@@ -1,13 +1,26 @@
-package ui;
+package duke.ui;
 
-import exception.DukeException;
-import task.Task;
-import tasklist.TaskList;
+import duke.exception.DukeException;
+import duke.task.Task;
+import duke.tasklist.TaskList;
+import javafx.stage.Stage;
 
 /**
  * Ui class which generates feedback to the user.
  */
-public class Ui {
+public class UiManager {
+
+    private MainWindow mainWindow;
+
+    public void start(Stage primaryStage) {
+        try {
+            mainWindow = new MainWindow(primaryStage);
+            mainWindow.show(); //This should be called before creating other UI parts
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Shows a welcome message.

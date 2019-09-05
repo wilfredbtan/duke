@@ -1,10 +1,10 @@
-package storage;
+package duke.storage;
 
-import task.Task;
-import task.Deadline;
-import task.Event;
-import tasklist.TaskList;
-import parser.Parser;
+import duke.task.Task;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.tasklist.TaskList;
+import duke.parser.Parser;
 
 import java.io.File;
 import java.io.IOException;

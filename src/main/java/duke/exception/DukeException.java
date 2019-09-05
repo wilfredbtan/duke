@@ -1,4 +1,4 @@
-package exception;
+package duke.exception;
 
 /**
  * DukeException class which can be thrown when exceptions related to Duke are raised. Will eventually be caught by

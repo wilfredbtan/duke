@@ -1,16 +1,18 @@
-import command.Command;
-import exception.DukeException;
-import parser.Parser;
-import storage.Storage;
-import storage.StorageInterface;
-import tasklist.TaskList;
-import ui.Ui;
+package duke;
+
+import duke.command.Command;
+import duke.exception.DukeException;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.storage.StorageInterface;
+import duke.tasklist.TaskList;
+import duke.ui.UiManager;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Main class used to drive the program.
+ * duke.Main class used to drive the program.
  * @author Wilfred Bradley Tan, A0185405E.
  */
 public class Duke {
@@ -18,7 +20,7 @@ public class Duke {
     /** Object used to execute commands. */
     private Command command = new Command();
     /** User interface to display feedback and instructions to user. */
-    private Ui ui = new Ui();
+    private UiManager ui = new UiManager();
     /** Storage object to facilitate loading and saving of tasks. */
     private StorageInterface storage = new Storage("tasks.txt");
     /** List of tasks added by the user. */
@@ -63,7 +65,7 @@ public class Duke {
      * You should have your own function to generate a response to user input.
      * Replace this stub with your completed method.
      */
-    String getResponse(String input) {
+    public String getResponse(String input) {
         return "Duke heard: " + input;
     }
 }

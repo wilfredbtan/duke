@@ -1,15 +1,31 @@
+package duke.ui;
+
+import duke.DialogBox;
+import duke.Duke;
+import duke.Main;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import java.io.IOException;
+import java.net.URL;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Controller for MainWindow. Provides the layout for the other controls.
  */
 public class MainWindow extends AnchorPane {
+
+    private static final String FXML = "/view/MainWindow.fxml";
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
+
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -20,17 +36,34 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Duke duke;
+    private Stage primaryStage;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
+
+    public MainWindow(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        fxmlLoader.setLocation(getFxmlFileUrl(FXML));
+        fxmlLoader.setController(this);
+        fxmlLoader.setRoot(primaryStage);
+
+        duke = new Duke();
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new AssertionError(e);
+        }
+    }
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    public void setDuke(Duke d) {
-        duke = d;
+    public void show() {
+        primaryStage.show();
     }
 
     /**
@@ -47,4 +80,15 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
     }
+
+    private static URL getFxmlFileUrl(String fxmlFileName) {
+        requireNonNull(fxmlFileName);
+        URL fxmlFileUrl = Main.class.getResource(fxmlFileName);
+        return requireNonNull(fxmlFileUrl);
+    }
+
+    public void setDuke(Duke d) {
+        duke = d;
+    }
+
 }

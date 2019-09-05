@@ -1,6 +1,6 @@
-package storage;
+package duke.storage;
 
-import tasklist.TaskList;
+import duke.tasklist.TaskList;
 import java.io.IOException;
 
 public interface StorageInterface {

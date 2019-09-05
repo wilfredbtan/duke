@@ -1,8 +1,8 @@
-package tasklist;
+package duke.tasklist;
 
-import exception.DukeException;
-import storage.StorageInterface;
-import task.Task;
+import duke.exception.DukeException;
+import duke.storage.StorageInterface;
+import duke.task.Task;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
