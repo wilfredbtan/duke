@@ -11,6 +11,7 @@ import duke.ui.UiManager;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.logging.Logger;
 
 /**
  * Command class that executes parsed commands given to it.
@@ -32,6 +33,8 @@ public class Command {
     /** Keyword for finding the task in a list. */
     private String keyword;
 
+    private final Logger logger = Logger.getLogger(Command.class.getName());
+
     /**
      * Drives the system by processing the given commands and doing the corresponding actions.
      * @param ui UserInterface which provides feedback to the user.
@@ -39,40 +42,42 @@ public class Command {
      * @param storage Storage which determines the location and format of saved data.
      * @throws DukeException Exception is thrown when invalid or incomplete commands are given.
      */
-    public void execute(UiManager ui, TaskList taskList, StorageInterface storage) throws DukeException {
+    public String execute(UiManager ui, TaskList taskList, StorageInterface storage) throws DukeException {
+        String output = "";
+
         switch (getCommandString()) {
         case "find":
             TaskList filteredList = taskList.find(getKeyword());
-            ui.showFindSuccess();
-            ui.showList(filteredList);
+            output = ui.showFindSuccess();
+            output += ui.showList(filteredList);
             break;
 
         case "todo":
             Task currTodo = new Todo(getDesc());
             taskList.add(currTodo, storage);
-            ui.showAddSuccess(currTodo, taskList);
+            output = ui.showAddSuccess(currTodo, taskList);
             break;
 
         case "deadline":
             Task currDeadline = new Deadline(getDesc(), getStartDate(), getStartTime());
             taskList.add(currDeadline, storage);
-            ui.showAddSuccess(currDeadline, taskList);
+            output = ui.showAddSuccess(currDeadline, taskList);
             break;
 
         case "event":
             Task currEvent = new Event(getDesc(), getStartDate(), getStartTime(),
                     getEndTime());
             taskList.add(currEvent, storage);
-            ui.showAddSuccess(currEvent, taskList);
+            output = ui.showAddSuccess(currEvent, taskList);
             break;
 
         case "delete":
             try {
                 Task deletedTask = taskList.get(getIndex() - 1);
                 taskList.remove(getIndex() - 1, storage);
-                ui.showDeleteSuccess(deletedTask, taskList);
+                output = ui.showDeleteSuccess(deletedTask, taskList);
             } catch (IndexOutOfBoundsException e) {
-                throw new DukeException("     Deleted item is out of bounds! Task not deleted", e);
+                throw new DukeException("Deleted item is out of bounds! Task not deleted", e);
             }
             break;
 
@@ -80,21 +85,29 @@ public class Command {
             try {
                 Task doneTask = taskList.get(getIndex() - 1);
                 taskList.setDone(doneTask, storage);
-                ui.showDoneSuccess(doneTask);
+                output = ui.showDoneSuccess(doneTask);
             } catch (IndexOutOfBoundsException e) {
-                throw new DukeException("     Selected item is out of bounds! Task not deleted", e);
+                throw new DukeException("Selected item is out of bounds! Task not deleted", e);
             }
             break;
         case "list":
-            ui.showList(taskList);
+            if (taskList.isEmpty()) {
+                throw new DukeException("No items added to this list yet!", null);
+            } else {
+                output = ui.showList(taskList);
+            }
             break;
         case "bye":
-            ui.showBye();
+            output = ui.showBye();
             System.exit(1);
             break;
         default:
-            ui.showInvalidInputError();
+            output = ui.showInvalidInputError();
+            logger.info(output);
         }
+
+        logger.info(output);
+        return output;
     }
 
     /**

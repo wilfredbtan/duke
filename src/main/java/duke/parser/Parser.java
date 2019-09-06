@@ -74,9 +74,9 @@ public class Parser {
                     newCommand.addEndTime(LocalTime.parse(timeRange[1], timeFormatter()));
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
-                throw new DukeException("    Incomplete command, please include a date and time", e);
+                throw new DukeException("Incomplete command, please include a date and time", e);
             } catch (NoSuchElementException e) {
-                throw new DukeException("    Incomplete command, please add a description, date and time.", e);
+                throw new DukeException("Incomplete command, please add a description, date and time.", e);
             }
             break;
         case "delete":
@@ -89,7 +89,7 @@ public class Parser {
         case "bye":
             break;
         default:
-            throw new DukeException("     ☹ OOPS!! I'm sorry, but I don't know what that means :-(", null);
+            throw new DukeException("☹ OOPS!! I'm sorry, but I don't know what that means :-(", null);
         }
 
         return newCommand;

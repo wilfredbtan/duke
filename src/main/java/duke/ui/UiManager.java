@@ -16,7 +16,6 @@ public class UiManager {
         try {
             mainWindow = new MainWindow(primaryStage);
             mainWindow.show(); //This should be called before creating other UI parts
-
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -25,18 +24,16 @@ public class UiManager {
     /**
      * Shows a welcome message.
      */
-    public void showWelcome() {
-        showLine();
-        System.out.println("    Hello! I'm Duke\n"
-                + "    What can I do for you?");
-        showLine();
+    public String showWelcome() {
+        return "    Hello! I'm Duke\n"
+                + "    What can I do for you?";
     }
 
     /**
      * Shows a good bye message.
      */
-    public void showBye() {
-        System.out.println("    Bye. Hope to see you again soon!");
+    public String showBye() {
+        return "    Bye. Hope to see you again soon!";
     }
 
     /**
@@ -44,36 +41,39 @@ public class UiManager {
      * @param taskList TaskList that is to be shown.
      * @throws DukeException Throws an exception if it is an invalid list or there exists and invalid task in the list.
      */
-    public void showList(TaskList taskList) throws DukeException {
+    public String showList(TaskList taskList) throws DukeException {
+        String list = "";
         for (int i = 0; i < taskList.getSize(); i++) {
-            System.out.println("    " + (i + 1) + ". " + taskList.get(i));
+            list += (i + 1) + ". " + taskList.get(i) + "\n";
         }
+
+        return list;
     }
 
     /**
      * Shows a formatted error message.
      * @param errorMessage Error message that will be printed.
      */
-    public void showError(String errorMessage) {
-        System.out.println(errorMessage);
+    public String showError(String errorMessage) {
+        return errorMessage;
     }
 
     /**
      * Shows the loading error message.
      */
-    public void showLoadingError() {
-        System.out.println("    No existing data. Duke initialised with an empty TaskList");
+    public String showLoadingError() {
+        return "No existing data. Duke initialised with an empty TaskList";
     }
 
     /**
      * Shows the invalid input error message.
      */
-    public void showInvalidInputError() {
-        System.out.println("     ☹ OOPS!! I'm sorry, but I don't know what that means :-(");
+    public String showInvalidInputError() {
+        return "☹ OOPS!! I'm sorry, but I don't know what that means :-(";
     }
 
-    public void showFindSuccess() {
-        System.out.println("     Here are the matching tasks in your list:");
+    public String showFindSuccess() {
+        return "     Here are the matching tasks in your list:";
     }
 
     /**
@@ -81,11 +81,10 @@ public class UiManager {
      * @param addedTask Task that is to be added.
      * @param taskList TaskList that the Task is to be added to.
      */
-    public void showAddSuccess(Task addedTask, TaskList taskList) {
-        System.out.println(
-                "    Got it. I've added this task:\n"
-                + "      " + addedTask + "\n"
-                + "    Now you have " + taskList.getSize() + " tasks in this list.");
+    public String showAddSuccess(Task addedTask, TaskList taskList) {
+        return "Got it. I've added this task:\n"
+                + addedTask + "\n"
+                + "Now you have " + taskList.getSize() + " tasks in this list.";
     }
 
     /**
@@ -93,27 +92,25 @@ public class UiManager {
      * @param deletedTask Task that is to be deleted.
      * @param taskList TaskList that the Task is to be deleted from.
      */
-    public void showDeleteSuccess(Task deletedTask, TaskList taskList) {
-        System.out.println(
-                "    Noted. I've removed this task:\n"
-                + "      " + deletedTask + "\n"
-                + "    Now you have " + taskList.getSize() + " tasks in this list.");
+    public String showDeleteSuccess(Task deletedTask, TaskList taskList) {
+        return "Noted. I've removed this task:\n"
+                + deletedTask + "\n"
+                + "Now you have " + taskList.getSize() + " tasks in this list.";
     }
 
     /**
      * Shows a message when a task is successfully marked as done.
      * @param doneTask Task that is to be marked as done.
      */
-    public void showDoneSuccess(Task doneTask) {
-        System.out.println(
-                "     Nice! I've marked this task as done:\n"
-                + "     " + doneTask);
+    public String showDoneSuccess(Task doneTask) {
+        return "Nice! I've marked this task as done:\n"
+                + doneTask;
     }
 
-    /**
-     * Shows a standard line string.
-     */
-    public void showLine() {
-        System.out.println("   ____________________________________________________________");
-    }
+//    /**
+//     * Shows a standard line string.
+//     */
+//    public String showLine() {
+//        System.out.println("   ____________________________________________________________");
+//    }
 }

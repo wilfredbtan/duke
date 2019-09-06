@@ -3,6 +3,7 @@ package duke.ui;
 import duke.DialogBox;
 import duke.Duke;
 import duke.Main;
+import duke.ui.UiManager;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,6 +53,11 @@ public class MainWindow extends AnchorPane {
 
         try {
             fxmlLoader.load();
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getDukeDialog("    Hello! I'm Duke\n"
+                            + "    What can I do for you?", dukeImage)
+            );
+
         } catch (IOException e) {
             throw new AssertionError(e);
         }

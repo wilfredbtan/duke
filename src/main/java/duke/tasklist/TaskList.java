@@ -7,6 +7,8 @@ import duke.task.Task;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * TaskList class which handles the commands related to the task list such as add and remove.
  */
@@ -50,11 +52,12 @@ public class TaskList {
      *      tasks with null description.
      */
     public void add(Task task, StorageInterface storage) throws DukeException {
-        if (task.getDescription() != null) {
+        try {
+            requireNonNull(task.getDescription());
             tasks.add(task);
             storage.save(this);
-        } else {
-            throw new DukeException("    Sorry, that's an incomplete command. Failed to add task.", null);
+        } catch (NullPointerException e) {
+            throw new DukeException("Sorry, that's an incomplete command. Failed to add task.", null);
         }
     }
 
@@ -103,6 +106,10 @@ public class TaskList {
      */
     public Task get(int index) {
         return tasks.get(index);
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
     }
 
 }

@@ -10,6 +10,7 @@ import duke.ui.UiManager;
 
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * duke.Main class used to drive the program.
@@ -25,6 +26,8 @@ public class Duke {
     private StorageInterface storage = new Storage("tasks.txt");
     /** List of tasks added by the user. */
     private TaskList taskList = new TaskList();
+
+    private final Logger logger = Logger.getLogger(Duke.class.getName());
 
     /**
      * Creates Duke with an absolute filePath.
@@ -44,28 +47,21 @@ public class Duke {
             ui.showLoadingError();
             taskList = new TaskList();
         }
-
-        while (true) {
-            try {
-                Scanner sc = new Scanner(System.in);
-                String userInput = sc.nextLine();
-                command = Parser.parse(userInput);
-
-                ui.showLine();
-                command.execute(ui, taskList, storage);
-            } catch (DukeException e) {
-                ui.showError(e.getMessage());
-            } finally {
-                ui.showLine();
-            }
-        }
     }
 
     /**
      * You should have your own function to generate a response to user input.
      * Replace this stub with your completed method.
      */
-    public String getResponse(String input) {
-        return "Duke heard: " + input;
+    public String getResponse(String userInput) {
+        String output;
+        try {
+            command = Parser.parse(userInput);
+            output = command.execute(ui, taskList, storage);
+        } catch (DukeException e) {
+            logger.info("reached");
+            output = ui.showError(e.getMessage());
+        }
+        return output;
     }
 }
