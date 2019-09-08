@@ -6,10 +6,10 @@ import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.storage.StorageInterface;
 import duke.tasklist.TaskList;
+import duke.ui.Message;
 import duke.ui.UiManager;
 
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
@@ -19,48 +19,40 @@ import java.util.logging.Logger;
 public class Duke {
 
     /** Object used to execute commands. */
-    private Command command = new Command();
+    private Command command;
     /** User interface to display feedback and instructions to user. */
     private UiManager ui = new UiManager();
     /** Storage object to facilitate loading and saving of tasks. */
-    private StorageInterface storage = new Storage("tasks.txt");
+    private StorageInterface storage = new Storage();
     /** List of tasks added by the user. */
-    private TaskList taskList = new TaskList();
+    private TaskList taskList;
 
     private final Logger logger = Logger.getLogger(Duke.class.getName());
 
-    /**
-     * Creates Duke with an absolute filePath.
-     * @param args String[]
-     */
-    public static void main(String[] args) {
-        new Duke().run();
-    }
-
-    /** Initiates the system by requesting for user input. Executes the next command after parsed
-     * by the Parser and fed to the command object. Error messages will be shown if invalid commands are given.
-     */
+    /** Initiates the system by requesting for user input. Executes the next command after parsed //     * by the Parser and fed to the command object. Error messages will be shown if invalid commands are given. //     */
     public void run() {
         try {
-            taskList = storage.load();
+            taskList = new TaskList(storage.load());
+            for (duke.task.Task t : taskList.getTasks()) {
+                logger.info("loaded tasks" + t.toString());
+            }
         } catch (IOException e) {
-            ui.showLoadingError();
+            logger.info(Message.loadingError());
             taskList = new TaskList();
         }
     }
 
-    /**
-     * You should have your own function to generate a response to user input.
-     * Replace this stub with your completed method.
-     */
     public String getResponse(String userInput) {
         String output;
+        logger.info("reached");
         try {
+            for (duke.task.Task t : taskList.getTasks()) {
+                logger.info("responded things " + t.toString());
+            }
             command = Parser.parse(userInput);
-            output = command.execute(ui, taskList, storage);
+            output = command.execute(taskList).getUserFeedback();
         } catch (DukeException e) {
-            logger.info("reached");
-            output = ui.showError(e.getMessage());
+            output = Message.error(e.getMessage());
         }
         return output;
     }

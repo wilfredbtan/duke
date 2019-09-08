@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.logging.Logger;
 
 /**
  * Storage class which handles the loading and saving of Task data.
@@ -25,6 +26,15 @@ public class Storage implements StorageInterface {
 
     /** Filepath to load from and save to. */
     private File file;
+    private static final String DEFAULT_PATH = "tasks.txt";
+    private static final Logger logger = Logger.getLogger(Storage.class.getName());
+
+    /**
+     * Initialises a Storage object with the default file path.
+     */
+    public Storage() {
+        this.file = new File(DEFAULT_PATH);
+    }
 
     /**
      * Initialises a Storage object.
@@ -39,7 +49,8 @@ public class Storage implements StorageInterface {
      * @return Tasklist that contains the loaded tasks.
      * @throws IOException Exception is thrown when an invalid file path is provided.
      */
-    public TaskList load() throws IOException {
+    public ArrayList<Task> load() throws IOException {
+        logger.info("load called in Storage");
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -47,17 +58,17 @@ public class Storage implements StorageInterface {
             FileInputStream fis = new FileInputStream(file);
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader br = new BufferedReader(isr);
-            //load tasks into task list.
+
             String line;
             while ((line = br.readLine()) != null) {
                 Task newTask = Parser.parseStringToTask(line);
                 tasks.add(newTask);
             }
         } catch (ParseException e) {
-            System.out.println("Failed to parse String to task");
+            logger.info("Failed to parse String to task");
         }
 
-        return new TaskList(tasks);
+        return tasks;
     }
 
     /**
@@ -76,7 +87,7 @@ public class Storage implements StorageInterface {
 
             writer.close();
         } catch (IOException e) {
-            System.out.println("invalid filePath");
+            logger.info("invalid filePath");
         }
     }
 

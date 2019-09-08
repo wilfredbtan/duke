@@ -1,6 +1,7 @@
 package duke.tasklist;
 
 import duke.exception.DukeException;
+import duke.storage.Storage;
 import duke.storage.StorageInterface;
 import duke.task.Task;
 
@@ -15,25 +16,24 @@ import static java.util.Objects.requireNonNull;
 public class TaskList {
     /** List of tasks. */
     private ArrayList<Task> tasks;
+    private StorageInterface storage;
 
     /**
      * Initialises the TaskList object with an empty task list.
      */
     public TaskList() {
+        this.storage = new Storage();
         this.tasks = new ArrayList<>();
     }
 
-    /**
-     * Initialises the TaskList object with the provided task list.
-     * @param taskList Task list used to initialise TaskList object.
-     */
-    public TaskList(ArrayList<Task> taskList) {
-        this.tasks = taskList;
+    public TaskList(ArrayList<Task> tasks) {
+        this.storage = new Storage();
+        this.tasks = tasks;
     }
 
     /**
      * Finds a task from the taskList.
-     * @param keyword Keyword that user is searching for in task's description. For example, "testString" contains
+     * @param keyword Keyword that user is searching for in task's description. For example, "test string" contains
      *                the "test" keyword.
      * @return TaskList that contains the tasks that were found.
      */
@@ -47,11 +47,10 @@ public class TaskList {
     /**
      * Adds a task to the task list.
      * @param task Task that is to be added to the list.
-     * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid task is added. For example, an incomplete command or
      *      tasks with null description.
      */
-    public void add(Task task, StorageInterface storage) throws DukeException {
+    public void add(Task task) throws DukeException {
         try {
             requireNonNull(task.getDescription());
             tasks.add(task);
@@ -64,26 +63,32 @@ public class TaskList {
     /**
      * Removes the task from the task list.
      * @param index Index of the task to be removed.
-     * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
-    public void remove(int index, StorageInterface storage) {
-        tasks.remove(index);
-        storage.save(this);
+    public void delete(int index) throws DukeException {
+        try {
+            tasks.remove(index);
+            storage.save(this);
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("That index is out of range! Task not deleted.", e);
+        }
     }
 
     /**
      * Sets the task as done in the Storage.
      * @param task Task which will be set as done.
-     * @param storage Storage object to save changes.
      * @throws DukeException Exception is thrown when an invalid index is provided i.e. IndexOutOfBoundsException
      */
-    public void setDone(Task task, StorageInterface storage) {
-        task.setDone(true);
-        storage.save(this);
+    public void setDone(Task task) throws DukeException {
+        try {
+            task.setDone(true);
+            storage.save(this);
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("That index is out of range! Task not marked as done.", e);
+        }
     }
 
-    /**
+        /**
      * Gets the TaskList.
      * @return ArrayList of tasks.
      */
@@ -104,12 +109,12 @@ public class TaskList {
      * @param index Index of the task to be retrieved.
      * @return Task which is retrieved.
      */
-    public Task get(int index) {
-        return tasks.get(index);
-    }
-
-    public boolean isEmpty() {
-        return tasks.isEmpty();
+    public Task get(int index) throws DukeException {
+        try {
+            return tasks.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            throw new DukeException("That index is out of range! Task not marked as done.", e);
+        }
     }
 
 }

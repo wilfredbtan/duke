@@ -8,7 +8,6 @@ import javafx.stage.Stage;
  * A GUI for Duke using FXML.
  */
 public class Main extends Application {
-
     @Override
     public void start(Stage stage) {
         UiManager ui = new UiManager();

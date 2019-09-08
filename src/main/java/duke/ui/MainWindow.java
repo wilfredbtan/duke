@@ -50,12 +50,13 @@ public class MainWindow extends AnchorPane {
         fxmlLoader.setRoot(primaryStage);
 
         duke = new Duke();
+        duke.run();
 
         try {
             fxmlLoader.load();
             dialogContainer.getChildren().addAll(
-                    DialogBox.getDukeDialog("    Hello! I'm Duke\n"
-                            + "    What can I do for you?", dukeImage)
+                    DialogBox.getDukeDialog("Hello! I'm Duke\n"
+                            + "What can I do for you?", dukeImage)
             );
 
         } catch (IOException e) {
@@ -91,10 +92,6 @@ public class MainWindow extends AnchorPane {
         requireNonNull(fxmlFileName);
         URL fxmlFileUrl = Main.class.getResource(fxmlFileName);
         return requireNonNull(fxmlFileUrl);
-    }
-
-    public void setDuke(Duke d) {
-        duke = d;
     }
 
 }

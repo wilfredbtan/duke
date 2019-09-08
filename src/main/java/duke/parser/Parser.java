@@ -1,6 +1,7 @@
 package duke.parser;
 
-import duke.command.Command;
+import duke.Duke;
+import duke.command.*;
 import duke.exception.DukeException;
 import duke.task.Task;
 import duke.task.Todo;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -19,22 +21,6 @@ import java.util.Scanner;
  * Parser class used to process Strings into variables that the Command object can execute.
  */
 public class Parser {
-
-    /** Command portion of the input. */
-    private String commandString;
-    /** Description portion of the input. */
-    private String desc;
-    /** Date when the task starts. */
-    private LocalDate startDate;
-    /** Time when the task starts. */
-    private LocalTime startTime;
-    /** Time when the task ends. */
-    private LocalTime endTime;
-    /** Index for deletion or marking tasks as done. */
-    private int index;
-    /** Keyword for finding the task in a list. */
-    private String keyword;
-
 
     /**
      * Parses user input into a Command object containing its required components such as description, date and time
@@ -45,54 +31,66 @@ public class Parser {
      */
     public static Command parse(String userInput) throws DukeException {
         Scanner sc = new Scanner(userInput);
-        Command newCommand = new Command();
         String commandString = sc.next();
-        newCommand.addCommandString(commandString);
 
         switch (commandString) {
         case "find":
-            newCommand.addKeyword(sc.next());
-            break;
+            try {
+                String keyword = sc.nextLine();
+                return new FindCommand(keyword);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Incomplete command. Please input at least 1 keyword!", e);
+            }
         case "todo":
-            newCommand.addDesc(sc.next());
-            break;
+            try {
+                String desc = sc.nextLine();
+                return new TodoCommand(desc);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Incomplete command. Please include a description!", e);
+            }
         case "deadline":
-            //Fallthrough
+            //fallthrough
         case "event":
             try {
                 String[] descriptionAndDate = sc.nextLine().split("/", 2);
-                newCommand.addDesc(descriptionAndDate[0]);
-
                 String[] dateTimeArr = descriptionAndDate[1].split(" ");
 
-                newCommand.addStartDate(LocalDate.parse(dateTimeArr[0], dateFormatter()));
+                String desc = descriptionAndDate[0];
+                LocalDate date = LocalDate.parse(dateTimeArr[0], dateFormatter());
+                LocalTime time = LocalTime.parse(dateTimeArr[1], timeFormatter());
+
                 String[] timeRange = dateTimeArr[1].split("-");
-                if (timeRange.length <= 1) {
-                    newCommand.addStartTime(LocalTime.parse(dateTimeArr[1], timeFormatter()));
+                if (commandString.equals("deadline")) {
+                    return new DeadlineCommand(desc, date, time);
                 } else {
-                    newCommand.addStartTime(LocalTime.parse(timeRange[0], timeFormatter()));
-                    newCommand.addEndTime(LocalTime.parse(timeRange[1], timeFormatter()));
+                    LocalTime endTime = LocalTime.parse(timeRange[1], timeFormatter());
+                    return new EventCommand(desc, date, time, endTime);
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException | NoSuchElementException | DateTimeParseException e) {
                 throw new DukeException("Incomplete command, please include a date and time", e);
-            } catch (NoSuchElementException e) {
-                throw new DukeException("Incomplete command, please add a description, date and time.", e);
             }
-            break;
         case "delete":
             //Fallthrough
+            try {
+                int deleteIndex = sc.nextInt();
+                return new DeleteCommand(deleteIndex - 1);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Please enter the command in this format: delete [index]", e);
+            }
         case "done":
-            newCommand.addIndex(sc.nextInt());
-            break;
+            try {
+                int doneIndex = sc.nextInt();
+                return new DoneCommand(doneIndex - 1);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Please enter the command in this format: done [index]", e);
+            }
         case "list":
-            //Fallthrough
+            return new ListCommand();
         case "bye":
-            break;
+            return new ExitCommand();
         default:
             throw new DukeException("☹ OOPS!! I'm sorry, but I don't know what that means :-(", null);
         }
-
-        return newCommand;
     }
 
     /**
