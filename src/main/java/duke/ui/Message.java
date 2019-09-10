@@ -5,20 +5,11 @@ import duke.task.Task;
 import duke.tasklist.TaskList;
 
 public class Message {
-    /**
-     * Shows a welcome message.
-     */
-    public static String welcome() {
-        return "    Hello! I'm Duke\n"
-                + "    What can I do for you?";
-    }
-
-    /**
-     * Shows a good bye message.
-     */
-    public static String exit() {
-        return "    Bye. Hope to see you again soon!";
-    }
+    public static String WELCOME = "Hello! I'm Duke\n" + "What can I do for you?";
+    public static String EXIT = "Bye. Hope to see you again soon!";
+    public static String EMPTY_LIST = "No items on this list!";
+    public static String LOADING_ERROR = "No existing data. Duke initialised with an empty TaskList";
+    public static String GENERAL_INVALID_INPUT = "\u2639 OOPS!! I'm sorry, but I don't know what that means :-(";
 
     /**
      * Shows the list of tasks.
@@ -43,19 +34,11 @@ public class Message {
     }
 
     /**
-     * Shows the loading error message.
+     * Shows a message of the list of tasks found.
+     * @param taskList Filtered tasklist that will be displayed.
+     * @return List of tasks found.
+     * @throws DukeException
      */
-    public static String loadingError() {
-        return "No existing data. Duke initialised with an empty TaskList";
-    }
-
-    /**
-     * Shows the invalid input error message.
-     */
-    public static String invalidInputError() {
-        return "☹ OOPS!! I'm sorry, but I don't know what that means :-(";
-    }
-
     public static String findSuccess(TaskList taskList) throws DukeException {
         return "Here are the matching tasks in your list:\n"
                 + showList(taskList);

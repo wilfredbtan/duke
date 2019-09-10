@@ -18,4 +18,8 @@ public class CommandResult {
     public String getUserFeedback() {
         return this.userFeedback;
     }
+
+    public boolean isExit() {
+        return this.isExit;
+    }
 }

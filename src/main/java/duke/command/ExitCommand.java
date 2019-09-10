@@ -8,7 +8,6 @@ public class ExitCommand extends Command{
 
     @Override
     public CommandResult execute(TaskList taskList) throws DukeException {
-        boolean isExit = true;
-        return new CommandResult(Message.exit(), isExit);
+        return new CommandResult(Message.EXIT, true);
     }
 }

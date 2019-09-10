@@ -1,12 +1,20 @@
 package duke.parser;
 
-import duke.Duke;
-import duke.command.*;
 import duke.exception.DukeException;
 import duke.task.Task;
 import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
+import duke.ui.Message;
+import duke.command.Command;
+import duke.command.TodoCommand;
+import duke.command.DeadlineCommand;
+import duke.command.EventCommand;
+import duke.command.DeleteCommand;
+import duke.command.DoneCommand;
+import duke.command.FindCommand;
+import duke.command.ListCommand;
+import duke.command.ExitCommand;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -34,13 +42,6 @@ public class Parser {
         String commandString = sc.next();
 
         switch (commandString) {
-        case "find":
-            try {
-                String keyword = sc.nextLine();
-                return new FindCommand(keyword);
-            } catch (NoSuchElementException e) {
-                throw new DukeException("Incomplete command. Please input at least 1 keyword!", e);
-            }
         case "todo":
             try {
                 String desc = sc.nextLine();
@@ -70,7 +71,6 @@ public class Parser {
                 throw new DukeException("Incomplete command, please include a date and time", e);
             }
         case "delete":
-            //Fallthrough
             try {
                 int deleteIndex = sc.nextInt();
                 return new DeleteCommand(deleteIndex - 1);
@@ -84,12 +84,19 @@ public class Parser {
             } catch (NoSuchElementException e) {
                 throw new DukeException("Please enter the command in this format: done [index]", e);
             }
+        case "find":
+            try {
+                String keyword = sc.nextLine();
+                return new FindCommand(keyword);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Incomplete command. Please input at least 1 keyword!", e);
+            }
         case "list":
             return new ListCommand();
         case "bye":
             return new ExitCommand();
         default:
-            throw new DukeException("☹ OOPS!! I'm sorry, but I don't know what that means :-(", null);
+            throw new DukeException(Message.GENERAL_INVALID_INPUT, null);
         }
     }
 

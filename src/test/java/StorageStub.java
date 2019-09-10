@@ -1,11 +1,13 @@
-import storage.StorageInterface;
-import tasklist.TaskList;
+import duke.storage.StorageInterface;
+import duke.task.Task;
+import duke.tasklist.TaskList;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class StorageStub implements StorageInterface {
     @Override
-    public TaskList load() throws IOException {
+    public ArrayList<Task> load() throws IOException {
         return null;
     }
 

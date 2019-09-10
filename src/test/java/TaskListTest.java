@@ -1,10 +1,10 @@
-import exception.DukeException;
-import storage.StorageInterface;
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.Todo;
-import tasklist.TaskList;
+import duke.exception.DukeException;
+import duke.storage.StorageInterface;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+import duke.tasklist.TaskList;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -18,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.fail;
  * TaskListTest class used to test the functionality of TaskList.
  */
 public class TaskListTest {
-
-    /** Storage stub with hard-coded file paths to pass as parameter for test methods. */
-    private StorageInterface storageStub = new StorageStub();
 
     /**
      * Creates an ArrayList with the provided task.
@@ -39,22 +36,22 @@ public class TaskListTest {
      */
     @Test
     public void add_tasks_success() throws DukeException {
-        Task todoStub = new Todo(" testString");
+        Task todoStub = new Todo(" Test String");
         ArrayList<Task> testTodoList = createList(todoStub);
         TaskList todoTaskList = new TaskList();
-        todoTaskList.add(todoStub, storageStub);
+        todoTaskList.add(todoStub);
         assertEquals(testTodoList, todoTaskList.getTasks());
 
-        Task deadlineStub = new Deadline(" testString ", dateStub(), timeStub());
+        Task deadlineStub = new Deadline(" Test String ", dateStub(), timeStub());
         ArrayList<Task> testDeadlineList = createList(deadlineStub);
         TaskList deadlineTaskList = new TaskList();
-        deadlineTaskList.add(deadlineStub, storageStub);
+        deadlineTaskList.add(deadlineStub);
         assertEquals(testDeadlineList, deadlineTaskList.getTasks());
 
-        Task eventStub = new Event(" testString ", dateStub(), timeStub(), timeStub());
+        Task eventStub = new Event(" Test String ", dateStub(), timeStub(), timeStub());
         ArrayList<Task> testEventList = createList(eventStub);
         TaskList eventTaskList = new TaskList();
-        eventTaskList.add(eventStub, storageStub);
+        eventTaskList.add(eventStub);
         assertEquals(testEventList, eventTaskList.getTasks());
     }
 

@@ -8,6 +8,10 @@ public class ListCommand extends Command {
 
     @Override
     public CommandResult execute(TaskList taskList) throws DukeException {
-        return new CommandResult(Message.showList(taskList));
+        if (taskList.isEmpty()) {
+            return new CommandResult(Message.EMPTY_LIST);
+        } else {
+            return new CommandResult(Message.showList(taskList));
+        }
     }
 }

@@ -53,8 +53,13 @@ public class TaskList {
     public void add(Task task) throws DukeException {
         try {
             requireNonNull(task.getDescription());
+
+            int sizeOfTasks = tasks.size();
             tasks.add(task);
+            assert tasks.size() == sizeOfTasks++ : "Task was not added";
+
             storage.save(this);
+
         } catch (NullPointerException e) {
             throw new DukeException("Sorry, that's an incomplete command. Failed to add task.", null);
         }
@@ -67,7 +72,9 @@ public class TaskList {
      */
     public void delete(int index) throws DukeException {
         try {
+            int sizeOfTasks = tasks.size();
             tasks.remove(index);
+            assert tasks.size() == sizeOfTasks-- : "Task was not deleted";
             storage.save(this);
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("That index is out of range! Task not deleted.", e);
@@ -115,6 +122,10 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("That index is out of range! Task not marked as done.", e);
         }
+    }
+
+    public boolean isEmpty() {
+        return tasks.isEmpty();
     }
 
 }

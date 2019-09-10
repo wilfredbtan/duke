@@ -6,8 +6,6 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.7'
 }
 
-//sourceSets.main.resources { srcDirs = ["src/main/java"]; include "**/*.*" }
-
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.5.0'
 }
@@ -18,6 +16,10 @@ checkstyle {
 
 test {
     useJUnitPlatform()
+}
+
+run {
+    enableAssertions = true
 }
 
 shadowJar {
