@@ -26,7 +26,7 @@ public class Storage implements StorageInterface {
 
     /** Filepath to load from and save to. */
     private File file;
-    private static final String DEFAULT_PATH = "tasks.txt";
+    private static final String DEFAULT_PATH = "data" + File.separator + "savedTasks.txt";
     private static final Logger logger = Logger.getLogger(Storage.class.getName());
 
     /**
@@ -50,7 +50,6 @@ public class Storage implements StorageInterface {
      * @throws IOException Exception is thrown when an invalid file path is provided.
      */
     public ArrayList<Task> load() throws IOException {
-        logger.info("load called in Storage");
 
         ArrayList<Task> tasks = new ArrayList<>();
 
@@ -65,7 +64,7 @@ public class Storage implements StorageInterface {
                 tasks.add(newTask);
             }
         } catch (ParseException e) {
-            logger.info("Failed to parse String to task");
+            logger.severe("Failed to parse String to task");
         }
 
         return tasks;
@@ -77,7 +76,11 @@ public class Storage implements StorageInterface {
      */
     public void save(TaskList taskList) {
         try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
             for (Task task : taskList.getTasks()) {
                 String formattedData = formatData(task);
 
@@ -87,7 +90,7 @@ public class Storage implements StorageInterface {
 
             writer.close();
         } catch (IOException e) {
-            logger.info("invalid filePath");
+            logger.severe("invalid filePath");
         }
     }
 

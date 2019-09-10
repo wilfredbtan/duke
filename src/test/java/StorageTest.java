@@ -1,8 +1,10 @@
-import storage.Storage;
-import task.Deadline;
-import task.Event;
-import task.Task;
-import task.Todo;
+import duke.storage.Storage;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
+
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -17,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class StorageTest {
 
     /** Absolute file path used to test loading and saving functionality. */
-    private static final String FILEPATH = "tasks.txt";
+    private static final String FILEPATH = "data" + File.separator + "testSave.txt";
 
     /**
      * Tests the success of formatting a Todo into the format used for saving / loading.

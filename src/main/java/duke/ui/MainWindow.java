@@ -1,10 +1,10 @@
 package duke.ui;
 
-import duke.DialogBox;
 import duke.Duke;
 import duke.Main;
-import duke.ui.UiManager;
 
+import duke.command.CommandResult;
+import duke.exception.DukeException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Logger;
 
 import static java.util.Objects.requireNonNull;
 
@@ -42,6 +43,8 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/DaUser.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/DaDuke.png"));
 
+    private final Logger logger = Logger.getLogger(MainWindow.class.getName());
+
     public MainWindow(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -55,8 +58,7 @@ public class MainWindow extends AnchorPane {
         try {
             fxmlLoader.load();
             dialogContainer.getChildren().addAll(
-                    DialogBox.getDukeDialog("Hello! I'm Duke\n"
-                            + "What can I do for you?", dukeImage)
+                    DialogBox.getDukeDialog(Message.WELCOME, dukeImage)
             );
 
         } catch (IOException e) {
@@ -80,12 +82,21 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = duke.getResponse(input);
+        CommandResult response = duke.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage)
+                DialogBox.getDukeDialog(response.getUserFeedback(), dukeImage)
         );
         userInput.clear();
+
+        if (response.isExit()) {
+            handleExit();
+        }
+    }
+
+    private void handleExit() {
+        logger.info("---------Bye! See you again----------");
+        System.exit(1);
     }
 
     private static URL getFxmlFileUrl(String fxmlFileName) {
