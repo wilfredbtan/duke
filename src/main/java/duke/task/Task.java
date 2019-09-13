@@ -1,9 +1,14 @@
 package duke.task;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 /**
  * Task class which can be extended to create sub tasks.
  */
-public class Task {
+public abstract class Task {
 
     /** Type of Task. */
     protected String type;
@@ -61,12 +66,27 @@ public class Task {
         return this.isDone;
     }
 
+    public LocalDate getStartDate() {
+        return LocalDate.parse("01-01-3000",
+                DateTimeFormatter.ofPattern( "dd-MM-yyyy", Locale.ENGLISH));
+    }
+
+    public LocalTime getStartTime() {
+        return LocalTime.parse("2359",
+                DateTimeFormatter.ofPattern( "HHmm", Locale.ENGLISH));
+    }
+
+    public LocalTime getEndTime() {
+        return LocalTime.parse("2359",
+                DateTimeFormatter.ofPattern( "HHmm", Locale.ENGLISH));
+    }
+
     /**
      * String of the status icon followed by description.
      * @return String in the given format.
      */
     public String toString() {
-        return "[" + getStatusIcon() + "]" + description;
+        return "[" + getStatusIcon() + "] " + description;
     }
 
 }

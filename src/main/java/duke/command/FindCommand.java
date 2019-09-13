@@ -15,6 +15,6 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(TaskList taskList) throws DukeException {
         TaskList filteredList = taskList.find(keyword);
-        return new CommandResult(Message.findSuccess(filteredList));
+        return new CommandResult(Message.showFindSuccess(filteredList));
     }
 }

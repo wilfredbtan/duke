@@ -17,6 +17,6 @@ public class DeleteCommand extends Command {
     public CommandResult execute(TaskList taskList) throws DukeException {
         Task deletedTask = taskList.get(deleteIndex);
         taskList.delete(deleteIndex);
-        return new CommandResult(Message.deleteSuccess(deletedTask, taskList));
+        return new CommandResult(Message.showDeleteSuccess(deletedTask, taskList));
     }
 }

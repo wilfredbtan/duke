@@ -26,6 +26,6 @@ public class DeadlineCommand extends Command {
     public CommandResult execute(TaskList taskList) throws DukeException {
         Task deadline = new Deadline(desc, date, time);
         taskList.add(deadline);
-        return new CommandResult(Message.addSuccess(deadline, taskList));
+        return new CommandResult(Message.showAddSuccess(deadline, taskList));
     }
 }

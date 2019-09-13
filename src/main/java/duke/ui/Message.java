@@ -1,5 +1,6 @@
 package duke.ui;
 
+import duke.Duke;
 import duke.exception.DukeException;
 import duke.task.Task;
 import duke.tasklist.TaskList;
@@ -10,6 +11,7 @@ public class Message {
     public static String EMPTY_LIST = "No items on this list!";
     public static String LOADING_ERROR = "No existing data. Duke initialised with an empty TaskList";
     public static String GENERAL_INVALID_INPUT = "\u2639 OOPS!! I'm sorry, but I don't know what that means :-(";
+    public static String CLEAR_SUCCESS = "Yours tasks have been cleared!";
 
     /**
      * Shows the list of tasks.
@@ -29,8 +31,13 @@ public class Message {
      * Shows a formatted error message.
      * @param errorMessage Error message that will be printed.
      */
-    public static String error(String errorMessage) {
+    public static String showError(String errorMessage) {
         return errorMessage;
+    }
+
+    public static String showSortSuccess(TaskList taskList) throws DukeException {
+        return "Your task list has been sorted: \n"
+                + showList(taskList);
     }
 
     /**
@@ -39,7 +46,7 @@ public class Message {
      * @return List of tasks found.
      * @throws DukeException
      */
-    public static String findSuccess(TaskList taskList) throws DukeException {
+    public static String showFindSuccess(TaskList taskList) throws DukeException {
         return "Here are the matching tasks in your list:\n"
                 + showList(taskList);
     }
@@ -49,7 +56,7 @@ public class Message {
      * @param addedTask Task that is to be added.
      * @param taskList TaskList that the Task is to be added to.
      */
-    public static String addSuccess(Task addedTask, TaskList taskList) {
+    public static String showAddSuccess(Task addedTask, TaskList taskList) {
         return "Got it. I've added this task:\n"
                 + addedTask + "\n"
                 + "Now you have " + taskList.getSize() + " tasks in this list.";
@@ -60,7 +67,7 @@ public class Message {
      * @param deletedTask Task that is to be deleted.
      * @param taskList TaskList that the Task is to be deleted from.
      */
-    public static String deleteSuccess(Task deletedTask, TaskList taskList) {
+    public static String showDeleteSuccess(Task deletedTask, TaskList taskList) {
         return "Noted. I've removed this task:\n"
                 + deletedTask + "\n"
                 + "Now you have " + taskList.getSize() + " tasks in this list.";
@@ -70,7 +77,7 @@ public class Message {
      * Shows a message when a task is successfully marked as done.
      * @param doneTask Task that is to be marked as done.
      */
-    public static String doneSuccess(Task doneTask) {
+    public static String showDoneSuccess(Task doneTask) {
         return "Nice! I've marked this task as done:\n"
                 + doneTask;
     }

@@ -34,6 +34,7 @@ public class Event extends Task {
      * Gets the date when the Event starts.
      * @return Start date of Event.
      */
+    @Override
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -42,6 +43,7 @@ public class Event extends Task {
      * Gets the time when the Event starts.
      * @return Start time of the Event.
      */
+    @Override
     public LocalTime getStartTime() {
         return startTime;
     }
@@ -50,6 +52,7 @@ public class Event extends Task {
      * Gets the time when the Event ends.
      * @return End time of the Event.
      */
+    @Override
     public LocalTime getEndTime() {
         return endTime;
     }
@@ -59,7 +62,7 @@ public class Event extends Task {
      * @return String in the given format.
      */
     public String toString() {
-        return "[E]" + super.toString() + "(at: " + startDate + " " + startTime
-                + "-" + endTime + ")";
+        return "[E]" + super.toString() + " (at: " + startTime
+                + "-" + endTime + " " + startDate + ")";
     }
 }

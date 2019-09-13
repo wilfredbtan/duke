@@ -28,6 +28,6 @@ public class EventCommand extends Command {
     public CommandResult execute(TaskList taskList) throws DukeException {
         Task event = new Event(desc, startDate, startTime, endTime);
         taskList.add(event);
-        return new CommandResult(Message.addSuccess(event, taskList));
+        return new CommandResult(Message.showAddSuccess(event, taskList));
     }
 }

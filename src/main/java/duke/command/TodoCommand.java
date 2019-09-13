@@ -19,6 +19,6 @@ public class TodoCommand extends Command {
     public CommandResult execute(TaskList taskList) throws DukeException {
         Task todo = new Todo(desc);
         taskList.add(todo);
-        return new CommandResult(Message.addSuccess(todo, taskList));
+        return new CommandResult(Message.showAddSuccess(todo, taskList));
     }
 }

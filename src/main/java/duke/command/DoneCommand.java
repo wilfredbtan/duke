@@ -17,6 +17,6 @@ public class DoneCommand extends Command {
     public CommandResult execute(TaskList taskList) throws DukeException {
         Task doneTask = taskList.get(doneIndex);
         taskList.setDone(doneTask);
-        return new CommandResult(Message.doneSuccess(doneTask));
+        return new CommandResult(Message.showDoneSuccess(doneTask));
     }
 }

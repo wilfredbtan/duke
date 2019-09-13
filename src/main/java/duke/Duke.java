@@ -29,6 +29,7 @@ public class Duke {
 
     /** Initiates the system by requesting for user input. Executes the next command after parsed //     * by the Parser and fed to the command object. Error messages will be shown if invalid commands are given. //     */
     public void run() {
+        logger.info("---------- Initialising Duke, your best friend! ----------");
         try {
             taskList = new TaskList(storage.load());
         } catch (IOException e) {
@@ -39,11 +40,10 @@ public class Duke {
 
     public CommandResult getResponse(String userInput) {
         try {
-            logger.info("---------- Initialising Duke, your best friend! ----------");
             command = Parser.parse(userInput);
             return command.execute(taskList);
         } catch (DukeException e) {
-            return new CommandResult(Message.error(e.getMessage()));
+            return new CommandResult(Message.showError(e.getMessage()));
         }
     }
 }

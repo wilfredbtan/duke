@@ -1,20 +1,12 @@
 package duke.parser;
 
+import duke.command.*;
 import duke.exception.DukeException;
 import duke.task.Task;
 import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
 import duke.ui.Message;
-import duke.command.Command;
-import duke.command.TodoCommand;
-import duke.command.DeadlineCommand;
-import duke.command.EventCommand;
-import duke.command.DeleteCommand;
-import duke.command.DoneCommand;
-import duke.command.FindCommand;
-import duke.command.ListCommand;
-import duke.command.ExitCommand;
 
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -24,11 +16,14 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * Parser class used to process Strings into variables that the Command object can execute.
  */
 public class Parser {
+
+    private static Logger logger = Logger.getLogger(Parser.class.getName());
 
     /**
      * Parses user input into a Command object containing its required components such as description, date and time
@@ -45,7 +40,8 @@ public class Parser {
         case "todo":
             try {
                 String desc = sc.nextLine();
-                return new TodoCommand(desc);
+                String trimmedDesc = desc.trim();
+                return new TodoCommand(trimmedDesc);
             } catch (NoSuchElementException e) {
                 throw new DukeException("Incomplete command. Please include a description!", e);
             }
@@ -56,11 +52,12 @@ public class Parser {
                 String[] descriptionAndDate = sc.nextLine().split("/", 2);
                 String[] dateTimeArr = descriptionAndDate[1].split(" ");
 
-                String desc = descriptionAndDate[0];
+                String desc = descriptionAndDate[0].trim();
                 LocalDate date = LocalDate.parse(dateTimeArr[0], dateFormatter());
-                LocalTime time = LocalTime.parse(dateTimeArr[1], timeFormatter());
-
+                logger.info(dateTimeArr[1]);
                 String[] timeRange = dateTimeArr[1].split("-");
+                LocalTime time = LocalTime.parse(timeRange[0], timeFormatter());
+
                 if (commandString.equals("deadline")) {
                     return new DeadlineCommand(desc, date, time);
                 } else {
@@ -86,13 +83,22 @@ public class Parser {
             }
         case "find":
             try {
-                String keyword = sc.nextLine();
+                String keyword = sc.nextLine().trim();
                 return new FindCommand(keyword);
             } catch (NoSuchElementException e) {
                 throw new DukeException("Incomplete command. Please input at least 1 keyword!", e);
             }
+        case "sort":
+            try {
+                String category = sc.nextLine().trim();
+                return new SortCommand(category);
+            } catch (NoSuchElementException e) {
+                throw new DukeException("Incomplete command. Please choose a category to sort by!", e);
+            }
         case "list":
             return new ListCommand();
+        case "clear":
+            return new ClearCommand();
         case "bye":
             return new ExitCommand();
         default:
@@ -124,14 +130,12 @@ public class Parser {
         switch (type) {
         case "T":
             newTask = new Todo(desc);
-            newTask.setDone(isDone);
             break;
         case "D":
             newStartDate = LocalDate.parse((dataArr[3]), dateFormatter());
             newStartTime = LocalTime.parse((dataArr[4]), timeFormatter());
 
             newTask = new Deadline(desc, newStartDate, newStartTime);
-            newTask.setDone(isDone);
             break;
         case "E":
             newStartDate = LocalDate.parse((dataArr[3]), dateFormatter());
@@ -139,12 +143,12 @@ public class Parser {
             newEndTime = LocalTime.parse((dataArr[5]), timeFormatter());
 
             newTask = new Event(desc, newStartDate, newStartTime, newEndTime);
-            newTask.setDone(isDone);
             break;
         default:
             throw new ParseException("invalid task loaded", 0);
         }
 
+        newTask.setDone(isDone);
         return newTask;
     }
 

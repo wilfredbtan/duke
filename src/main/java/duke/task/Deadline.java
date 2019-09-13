@@ -9,21 +9,39 @@ import java.time.LocalTime;
 public class Deadline extends Task {
 
     /** Date of the Deadline. */
-    private LocalDate date;
+    private LocalDate startDate;
     /** Time of the Deadline. */
-    private LocalTime time;
+    private LocalTime startTime;
 
     /**
      * Initialises a Deadline object.
      * @param description Description of the Deadline.
-     * @param date Date of the Deadline.
-     * @param time Time of the Deadline.
+     * @param startDate Date of the Deadline.
+     * @param startTime Time of the Deadline.
      */
-    public Deadline(String description, LocalDate date, LocalTime time) {
+    public Deadline(String description, LocalDate startDate, LocalTime startTime) {
         super(description);
         this.type = "D";
-        this.date = date;
-        this.time = time;
+        this.startDate = startDate;
+        this.startTime = startTime;
+    }
+
+    /**
+     * Gets the date of the Deadline.
+     * @return Date of the Deadline.
+     */
+    @Override
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
+    /**
+     * Gets the time of the Deadline.
+     * @return Time of the Deadline.
+     */
+    @Override
+    public LocalTime getStartTime() {
+        return this.startTime;
     }
 
     /**
@@ -31,22 +49,6 @@ public class Deadline extends Task {
      * @return String in the given format.
      */
     public String toString() {
-        return "[D]" + super.toString() + "(by: " + date + " " + time + ")";
-    }
-
-    /**
-     * Gets the date of the Deadline.
-     * @return Date of the Deadline.
-     */
-    public LocalDate getDate() {
-        return this.date;
-    }
-
-    /**
-     * Gets the time of the Deadline.
-     * @return Time of the Deadline.
-     */
-    public LocalTime getTime() {
-        return this.time;
+        return "[D]" + super.toString() + " (by: " + startTime + " " + startDate + ")";
     }
 }

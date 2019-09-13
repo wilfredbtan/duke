@@ -1,11 +1,17 @@
 package duke.tasklist;
 
+import duke.Duke;
 import duke.exception.DukeException;
 import duke.storage.Storage;
 import duke.storage.StorageInterface;
 import duke.task.Task;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.logging.Logger;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -18,6 +24,8 @@ public class TaskList {
     private ArrayList<Task> tasks;
     private StorageInterface storage;
 
+    private static Logger logger = Logger.getLogger(TaskList.class.getName());
+
     /**
      * Initialises the TaskList object with an empty task list.
      */
@@ -29,6 +37,44 @@ public class TaskList {
     public TaskList(ArrayList<Task> tasks) {
         this.storage = new Storage();
         this.tasks = tasks;
+    }
+
+    public TaskList sort(String category) throws DukeException {
+        ArrayList<Task> sortedTasks;
+
+        switch (category) {
+        case "description":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getDescription))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case "type":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getType))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case "done":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getDone).reversed())
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case "startDate":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getStartDate))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case "startTime":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getStartTime))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        case "endTime":
+            sortedTasks = tasks.stream().sorted(Comparator.comparing(Task::getEndTime))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            break;
+        default:
+            throw new DukeException("Please sort using either description, type, done, startDate " +
+                    "startTime or endTime.", null);
+        }
+
+        tasks = sortedTasks;
+        storage.save(this);
+        return this;
     }
 
     /**
@@ -79,6 +125,11 @@ public class TaskList {
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("That index is out of range! Task not deleted.", e);
         }
+    }
+
+    public void clear() {
+        tasks.clear();
+        storage.save(this);
     }
 
     /**

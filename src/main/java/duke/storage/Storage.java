@@ -111,8 +111,8 @@ public class Storage implements StorageInterface {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH);
 
         if (currTask instanceof Deadline) {
-            data += "|" + ((Deadline) currTask).getDate().format(dateFormatter)
-                    + "|" + ((Deadline) currTask).getTime().format(timeFormatter);
+            data += "|" + ((Deadline) currTask).getStartDate().format(dateFormatter)
+                    + "|" + ((Deadline) currTask).getStartTime().format(timeFormatter);
         }
 
         if (currTask instanceof Event) {
