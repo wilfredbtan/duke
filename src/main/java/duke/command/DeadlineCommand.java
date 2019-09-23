@@ -9,6 +9,9 @@ import duke.ui.Message;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+/**
+ * DeadlineCommand class which creates a new deadline task.
+ */
 public class DeadlineCommand extends Command {
 
     /** Description portion of the input. */
@@ -16,6 +19,12 @@ public class DeadlineCommand extends Command {
     private LocalDate date;
     private LocalTime time;
 
+    /**
+     * Initialises a deadline command.
+     * @param desc description of the deadline.
+     * @param date date of the deadline.
+     * @param time time of the deadline.
+     */
     public DeadlineCommand(String desc, LocalDate date, LocalTime time) {
         this.desc = desc;
         this.date = date;

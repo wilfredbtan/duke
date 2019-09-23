@@ -1,4 +1,9 @@
-T|0|heello
-E|0|heha|25/11/1996|1234|1244
-D|1|sorr1|26/11/1995|1233
-T|0|zee
+T|1|hello
+E|0|ok|12/11/1996|1234|2234
+D|0|alright|12/11/1996|1234
+T|0|kk
+T|0|expand
+T|0|more
+T|0|see this
+T|0|even more
+T|0|what

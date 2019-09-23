@@ -4,7 +4,7 @@ import duke.exception.DukeException;
 import duke.tasklist.TaskList;
 
 /**
- * Command class that executes parsed commands given to it.
+ * Abstract Command class can be extended to create sub commands which are executable.
  */
 public abstract class Command {
 

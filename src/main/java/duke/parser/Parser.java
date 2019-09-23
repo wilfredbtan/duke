@@ -1,11 +1,22 @@
 package duke.parser;
 
-import duke.command.*;
+import duke.command.Command;
+import duke.command.DeadlineCommand;
+import duke.command.EventCommand;
+import duke.command.TodoCommand;
+import duke.command.DeleteCommand;
+import duke.command.DoneCommand;
+import duke.command.FindCommand;
+import duke.command.SortCommand;
+import duke.command.ListCommand;
+import duke.command.ClearCommand;
+import duke.command.ExitCommand;
+import duke.command.JokeCommand;
 import duke.exception.DukeException;
-import duke.task.Task;
-import duke.task.Todo;
 import duke.task.Deadline;
 import duke.task.Event;
+import duke.task.Task;
+import duke.task.Todo;
 import duke.ui.Message;
 
 import java.text.ParseException;
@@ -19,7 +30,7 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 /**
- * Parser class used to process Strings into variables that the Command object can execute.
+ * Parser class used to process Strings into data that the Command object can execute.
  */
 public class Parser {
 
@@ -33,6 +44,9 @@ public class Parser {
      *      missing date / time or incorrect date / time format.
      */
     public static Command parse(String userInput) throws DukeException {
+        if (userInput.contains("joke")) {
+            return new JokeCommand();
+        }
         Scanner sc = new Scanner(userInput);
         String commandString = sc.next();
 
@@ -65,35 +79,35 @@ public class Parser {
                     return new EventCommand(desc, date, time, endTime);
                 }
             } catch (ArrayIndexOutOfBoundsException | NoSuchElementException | DateTimeParseException e) {
-                throw new DukeException("Incomplete command, please include a date and time", e);
+                throw new DukeException("Incomplete command, include a date and time you fool.", e);
             }
         case "delete":
             try {
                 int deleteIndex = sc.nextInt();
                 return new DeleteCommand(deleteIndex - 1);
             } catch (NoSuchElementException e) {
-                throw new DukeException("Please enter the command in this format: delete [index]", e);
+                throw new DukeException("Enter the command in this format: delete [index]", e);
             }
         case "done":
             try {
                 int doneIndex = sc.nextInt();
                 return new DoneCommand(doneIndex - 1);
             } catch (NoSuchElementException e) {
-                throw new DukeException("Please enter the command in this format: done [index]", e);
+                throw new DukeException("Enter the command in this format: done [index]", e);
             }
         case "find":
             try {
                 String keyword = sc.nextLine().trim();
                 return new FindCommand(keyword);
             } catch (NoSuchElementException e) {
-                throw new DukeException("Incomplete command. Please input at least 1 keyword!", e);
+                throw new DukeException("Incomplete command. Input at least 1 keyword you fool!", e);
             }
         case "sort":
             try {
                 String category = sc.nextLine().trim();
                 return new SortCommand(category);
             } catch (NoSuchElementException e) {
-                throw new DukeException("Incomplete command. Please choose a category to sort by!", e);
+                throw new DukeException("Incomplete command. Choose a category to sort by!", e);
             }
         case "list":
             return new ListCommand();

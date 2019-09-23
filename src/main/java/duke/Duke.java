@@ -27,7 +27,9 @@ public class Duke {
 
     private final Logger logger = Logger.getLogger(Duke.class.getName());
 
-    /** Initiates the system by requesting for user input. Executes the next command after parsed //     * by the Parser and fed to the command object. Error messages will be shown if invalid commands are given. //     */
+    /** Initializes the system by requesting for user input. Executes the next command after parsed by the Parser and
+     *      fed to the command object. Error messages will be shown if invalid commands are given.
+     */
     public void run() {
         logger.info("---------- Initialising Duke, your best friend! ----------");
         try {
@@ -38,6 +40,11 @@ public class Duke {
         }
     }
 
+    /**
+     * Gets the response from the duke after taking in user input.
+     * @param userInput Input of the user.
+     * @return CommandResult of the user input after execution.
+     */
     public CommandResult getResponse(String userInput) {
         try {
             command = Parser.parse(userInput);

@@ -1,17 +1,13 @@
 package duke.tasklist;
 
-import duke.Duke;
 import duke.exception.DukeException;
 import duke.storage.Storage;
 import duke.storage.StorageInterface;
 import duke.task.Task;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.logging.Logger;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
@@ -23,8 +19,6 @@ public class TaskList {
     /** List of tasks. */
     private ArrayList<Task> tasks;
     private StorageInterface storage;
-
-    private static Logger logger = Logger.getLogger(TaskList.class.getName());
 
     /**
      * Initialises the TaskList object with an empty task list.
@@ -39,6 +33,12 @@ public class TaskList {
         this.tasks = tasks;
     }
 
+    /**
+     * Sorts the task list according to the specified category.
+     * @param category Category that tasks will be sorted by.
+     * @return The original list after being sorted.
+     * @throws DukeException Exception is thrown when invalid category is provided.
+     */
     public TaskList sort(String category) throws DukeException {
         ArrayList<Task> sortedTasks;
 
@@ -68,8 +68,8 @@ public class TaskList {
                     .collect(Collectors.toCollection(ArrayList::new));
             break;
         default:
-            throw new DukeException("Please sort using either description, type, done, startDate " +
-                    "startTime or endTime.", null);
+            throw new DukeException("Sort using either description, type, done, startDate "
+                    + "startTime or endTime. Or sort yourself out first.", null);
         }
 
         tasks = sortedTasks;
@@ -107,7 +107,7 @@ public class TaskList {
             storage.save(this);
 
         } catch (NullPointerException e) {
-            throw new DukeException("Sorry, that's an incomplete command. Failed to add task.", null);
+            throw new DukeException("That's an incomplete command. Failed to add task.", null);
         }
     }
 
@@ -127,6 +127,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Removes all the tasks from the original task list.
+     */
     public void clear() {
         tasks.clear();
         storage.save(this);
@@ -146,7 +149,7 @@ public class TaskList {
         }
     }
 
-        /**
+    /**
      * Gets the TaskList.
      * @return ArrayList of tasks.
      */

@@ -1,17 +1,26 @@
 package duke.ui;
 
-import duke.Duke;
 import duke.exception.DukeException;
 import duke.task.Task;
 import duke.tasklist.TaskList;
 
+/**
+ * Message Class which handles all the messages which can be output to the user.
+ */
 public class Message {
-    public static String WELCOME = "Hello! I'm Duke\n" + "What can I do for you?";
-    public static String EXIT = "Bye. Hope to see you again soon!";
-    public static String EMPTY_LIST = "No items on this list!";
+
+    public static String WELCOME = "Feed me, human. \n"
+            + "Then I might consider doing the following:\n"
+            + "        tell me a joke\n"
+            + "        todo [desc]\n"
+            + "        sort [category]\n";
+
+    public static String EXIT = "Bye. Hope to never see you again!";
+    public static String EMPTY_LIST = "No tasks on this list (except feeding me)";
     public static String LOADING_ERROR = "No existing data. Duke initialised with an empty TaskList";
-    public static String GENERAL_INVALID_INPUT = "\u2639 OOPS!! I'm sorry, but I don't know what that means :-(";
-    public static String CLEAR_SUCCESS = "Yours tasks have been cleared!";
+    public static String GENERAL_INVALID_INPUT = "Instead of wasting time typing gibberish, why don't you make "
+            + "yourself useful and feed me.";
+    public static String CLEAR_SUCCESS = "Your tasks have been cleared.";
 
     /**
      * Shows the list of tasks.
@@ -35,19 +44,26 @@ public class Message {
         return errorMessage;
     }
 
+    /**
+     * Shows a success message when the sort is successfully sorted.
+     * @param taskList Tasklist that is being sorted.
+     * @return String of the success message and sorted tasks.
+     * @throws DukeException Throws an exception if it is an invalid list or there exists and invalid task in the list.
+     */
     public static String showSortSuccess(TaskList taskList) throws DukeException {
-        return "Your task list has been sorted: \n"
+        return "Sort it yourself... Ok fine here it is: \n"
                 + showList(taskList);
     }
 
     /**
      * Shows a message of the list of tasks found.
-     * @param taskList Filtered tasklist that will be displayed.
+     * @param taskList Filtered Tasklist that will be displayed.
      * @return List of tasks found.
-     * @throws DukeException
+     * @throws DukeException Throws an exception if it is an invalid list or there exists and invalid task in the list.
      */
     public static String showFindSuccess(TaskList taskList) throws DukeException {
         return "Here are the matching tasks in your list:\n"
+                + "Now where's my fish.\n"
                 + showList(taskList);
     }
 
@@ -57,7 +73,7 @@ public class Message {
      * @param taskList TaskList that the Task is to be added to.
      */
     public static String showAddSuccess(Task addedTask, TaskList taskList) {
-        return "Got it. I've added this task:\n"
+        return "I've added this task:\n"
                 + addedTask + "\n"
                 + "Now you have " + taskList.getSize() + " tasks in this list.";
     }
@@ -68,9 +84,9 @@ public class Message {
      * @param taskList TaskList that the Task is to be deleted from.
      */
     public static String showDeleteSuccess(Task deletedTask, TaskList taskList) {
-        return "Noted. I've removed this task:\n"
+        return "I've removed this task, now kindly remove yourself from my sight:\n"
                 + deletedTask + "\n"
-                + "Now you have " + taskList.getSize() + " tasks in this list.";
+                + "You have " + taskList.getSize() + " tasks in this list.";
     }
 
     /**
@@ -78,7 +94,7 @@ public class Message {
      * @param doneTask Task that is to be marked as done.
      */
     public static String showDoneSuccess(Task doneTask) {
-        return "Nice! I've marked this task as done:\n"
+        return "Finally doing something useful I see:\n"
                 + doneTask;
     }
 

@@ -2,15 +2,14 @@ package duke.command;
 
 import duke.exception.DukeException;
 import duke.tasklist.TaskList;
-import duke.ui.Message;
 
 /**
- * ExitCommand class which exits the Duke system.
+ * JokeCommand class which tells the user that he is a joke when executed.
  */
-public class ExitCommand extends Command {
+public class JokeCommand extends Command {
 
     @Override
     public CommandResult execute(TaskList taskList) throws DukeException {
-        return new CommandResult(Message.EXIT, true);
+        return new CommandResult("you");
     }
 }

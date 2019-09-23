@@ -1,8 +1,5 @@
 package duke.ui;
 
-import duke.exception.DukeException;
-import duke.task.Task;
-import duke.tasklist.TaskList;
 import javafx.stage.Stage;
 
 /**
@@ -10,10 +7,17 @@ import javafx.stage.Stage;
  */
 public class UiManager {
 
+    /** Mainwindow for views to be presented on. **/
     private MainWindow mainWindow;
 
+    /**
+     * Starts the application and shows the primary stage.
+     * @param primaryStage Primary stage where the views will be shown.
+     */
     public void start(Stage primaryStage) {
         try {
+            primaryStage.setTitle("How about, no.");
+            primaryStage.setResizable(false);
             mainWindow = new MainWindow(primaryStage);
             mainWindow.show(); //This should be called before creating other UI parts
         } catch (Throwable e) {

@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
- * Task class which can be extended to create sub tasks.
+ * Task abstract class which can be extended to create sub tasks.
  */
 public abstract class Task {
 
@@ -66,19 +66,32 @@ public abstract class Task {
         return this.isDone;
     }
 
+    /**
+     * Gets default value for date when a task starts. Set to an arbitrarily far date in the future for task sub classes
+     *      that do not have this field.
+     * @return the default value for start date.
+     */
     public LocalDate getStartDate() {
         return LocalDate.parse("01-01-3000",
-                DateTimeFormatter.ofPattern( "dd-MM-yyyy", Locale.ENGLISH));
+                DateTimeFormatter.ofPattern("dd-MM-yyyy", Locale.ENGLISH));
     }
 
+    /**
+     * Gets default value for time when a task starts. Set to 2359 for task sub classes that do not have this field.
+     * @return the default value for start time.
+     */
     public LocalTime getStartTime() {
         return LocalTime.parse("2359",
-                DateTimeFormatter.ofPattern( "HHmm", Locale.ENGLISH));
+                DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH));
     }
 
+    /**
+     * Gets default value for time when a task ends. Set to 2359 for task sub classes that do not have this field.
+     * @return the default value for end time.
+     */
     public LocalTime getEndTime() {
         return LocalTime.parse("2359",
-                DateTimeFormatter.ofPattern( "HHmm", Locale.ENGLISH));
+                DateTimeFormatter.ofPattern("HHmm", Locale.ENGLISH));
     }
 
     /**

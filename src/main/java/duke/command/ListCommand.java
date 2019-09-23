@@ -4,6 +4,9 @@ import duke.exception.DukeException;
 import duke.tasklist.TaskList;
 import duke.ui.Message;
 
+/**
+ * ListCommand class which lists out all the tasks in the system.
+ */
 public class ListCommand extends Command {
 
     @Override
