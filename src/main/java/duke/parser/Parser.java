@@ -67,6 +67,8 @@ public class Parser {
                 String[] dateTimeArr = descriptionAndDate[1].split(" ");
 
                 String desc = descriptionAndDate[0].trim();
+                logger.info("description: " +  desc);
+
                 LocalDate date = LocalDate.parse(dateTimeArr[0], dateFormatter());
                 logger.info(dateTimeArr[1]);
                 String[] timeRange = dateTimeArr[1].split("-");
