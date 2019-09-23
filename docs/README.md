@@ -1,17 +1,17 @@
 # User Guide - Grumpy Cat Task Manager
 
 ## Features 
-- [`todo`](#-todo-) - Add a new Todo to the list.
-- [`deadline`](#-deadline-) - Add a new Deadline to the task list.
-- [`event`](#-event-) - Add a new Event to the task list.
-- [`list`](#-list-) - List out all current tasks.
-- [`done`](#-done-) - Mark a task as done.
-- [`delete`](#-delete-) - Delete an existing task.
-- [`clear`](#-clear-) - Clear the task list of all tasks.
-- [`sort`](#-sort-) - Sort tasks by the category provided.
-- [`find`](#-find-) - Find a task using a keyword.
-- [`joke`](#-joke-) - Ask grumpy cat to tell you a joke.
-- [`bye`](#-bye-) - Exit the program.
+- [todo](#todo) - Add a new Todo to the list.
+- [deadline](#deadline) - Add a new Deadline to the task list.
+- [event](#event) - Add a new Event to the task list.
+- [list](#list) - List out all current tasks.
+- [done](#done) - Mark a task as done.
+- [delete](#delete) - Delete an existing task.
+- [clear](#clear) - Clear the task list of all tasks.
+- [sort](#sort) - Sort tasks by the category provided.
+- [find](#find) - Find a task using a keyword.
+- [joke](#joke) - Ask grumpy cat to tell you a joke.
+- [bye](#bye) - Exit the program.
 
 ## Usage
 
