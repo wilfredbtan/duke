@@ -101,8 +101,9 @@ public class TaskList {
             requireNonNull(task.getDescription());
 
             int sizeOfTasks = tasks.size();
+            int expectedSize = sizeOfTasks + 1;
             tasks.add(task);
-            assert tasks.size() == sizeOfTasks++ : "Task was not added";
+            assert tasks.size() == expectedSize : "Task was not added";
 
             storage.save(this);
 
@@ -120,7 +121,8 @@ public class TaskList {
         try {
             int sizeOfTasks = tasks.size();
             tasks.remove(index);
-            assert tasks.size() == sizeOfTasks-- : "Task was not deleted";
+            int expectedSize = sizeOfTasks - 1;
+            assert tasks.size() == expectedSize : "Task was not deleted";
             storage.save(this);
         } catch (IndexOutOfBoundsException e) {
             throw new DukeException("That index is out of range! Task not deleted.", e);

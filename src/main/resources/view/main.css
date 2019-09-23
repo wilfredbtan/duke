@@ -16,4 +16,5 @@
 
 #dialog-text {
     -fx-text-fill: white;
+    -fx-padding: 10;
 }
