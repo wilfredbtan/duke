@@ -1,17 +1,24 @@
 # User Guide - Grumpy Cat Task Manager
 
+![alt text](https://github.com/wilfredbtan/duke/blob/master/docs/Header.png?raw=true "Grump Cat Task Manager!")
+
+## Introduction
+This is a grumpy cat bot that will use it's negativity to make you feel more positive about yourself.
+You can tell it to *(begrudgingly)* do things such as save your `todos`, or `sort` your tasks and even tell you
+`jokes`. Have fun and stay positive! 😄
+
 ## Features 
-- [todo](#todo) - Add a new Todo to the list.
-- [deadline](#deadline) - Add a new Deadline to the task list.
-- [event](#event) - Add a new Event to the task list.
-- [list](#list) - List out all current tasks.
-- [done](#done) - Mark a task as done.
-- [delete](#delete) - Delete an existing task.
-- [clear](#clear) - Clear the task list of all tasks.
-- [sort](#sort) - Sort tasks by the category provided.
-- [find](#find) - Find a task using a keyword.
-- [joke](#joke) - Ask grumpy cat to tell you a joke.
-- [bye](#bye) - Exit the program.
+ * [todo](#todo---add-a-new-todo-to-the-list) - Add a new Todo to the list.
+ * [deadline](#deadline---add-a-new-deadline-to-the-task-list) - Add a new Deadline to the task list.
+ * [event](#event---add-a-new-event-to-the-task-list) - Add a new Event to the task list.
+ * [list](#list---list-out-all-current-tasks) - List out all current tasks.
+ * [done](#done---mark-a-task-as-done) - Mark a task as done.
+ * [delete](#delete---delete-an-existing-task) - Delete an existing task.
+ * [clear](#clear---clear-the-task-list-of-all-tasks) - Clear the task list of all tasks.
+ * [sort](#sort---sort-tasks-by-the-category-provided) - Sort tasks by the category provided.
+ * [find](#find---find-a-task-using-a-keyword) - Find a task using a keyword.
+ * [joke](#joke---ask-grumpy-cat-to-tell-you-a-joke) - Ask grumpy cat to tell you a joke.
+ * [bye](#bye---exit-the-program) - Exit the program.
 
 ## Usage
 
@@ -23,8 +30,7 @@ Type | Parameters | Description
 `deadline` | description \[dd-mm-yyyy] [HHmm] | Adds a  `deadline` task with a `description`, `date` and `time`
 `event` | description \[dd-mm-yyyy] [HHmm]-[HHmm] | Adds a  `deadline` task with a `description`, `startDate` ,`startTime` and `endTime`
 
-### `todo` 
-- Add a new Todo to the list.
+### todo - Add a new Todo to the list.
 
 Example of usage: 
 
@@ -37,8 +43,7 @@ I've added this task:
 Now you have 1 task in this list.
 ```
 
-### `deadline` 
-- Add a new Deadline to the task list.
+### deadline - Add a new Deadline to the task list.
 
 Example of usage: 
 
@@ -51,8 +56,7 @@ I've added this task:
 Now you have 1 task in this list.
 ```
 
-### `event` 
-- Add a new Event to the task list.
+### event - Add a new Event to the task list.
 
 Example of usage: 
 
@@ -65,8 +69,7 @@ I've added this task:
 Now you have 1 task in this list.
 ```
 
-### `list` 
-- List out all current tasks.
+### list - List out all current tasks.
 
 Example of usage:
 
@@ -79,8 +82,7 @@ Expected outcome:
 3. [E][✘] walk grumpy cat (at: 12:34-23:45 2019-12-12)
 ```
 
-### `done` 
-- Mark a task as done.
+### done - Mark a task as done.
 
 Example of usage:
 
@@ -93,8 +95,7 @@ Finally doing something useful I see:
 
 ```
 
-### `delete` 
-- Delete an existing task.
+### delete - Delete an existing task.
 
 Example of usage:  
 
@@ -107,8 +108,7 @@ I've removed this task, now kindly remove yourself from my sight:
 You have 2 tasks in this list.
 ```
 
-### `clear` 
-- Clear the task list of all tasks.
+### clear - Clear the task list of all tasks.
 
 Example of usage:  
 
@@ -119,8 +119,7 @@ Expected outcome:
 Yours tasks have been cleared.
 ```
 
-### `sort` 
-- Sort tasks by the category provided.
+### sort - Sort tasks by the category provided.
 
 Example of usage:  
 
@@ -133,8 +132,7 @@ Sort it yourseld... Ok fine here it is:
 2. [D][✘] feed me later (by: 12:34 2019-12-12)
 ```
 
-### `find` 
-- Find a task using a keyword.
+### find - Find a task using a keyword.
 
 Example of usage:  
 
@@ -147,8 +145,7 @@ Now where's my fish.
 1. [D][✘] feed me later (by: 12:34 2019-12-12)
 ```
 
-### `joke` 
-- Ask grumpy cat to tell you a joke.
+### joke - Ask grumpy cat to tell you a joke.
 
 Example of usage:  
 
@@ -158,8 +155,7 @@ Expected outcome:
 
 `you`
 
-### `bye` 
-- Exit the program.
+### bye - Exit the program.
 
 Example of usage:  
 
@@ -167,6 +163,6 @@ Example of usage:
 
 Expected outcome:  
 
-*Grumpy Cat task manager closes*
+- Grumpy Cat task manager closes
 
 
