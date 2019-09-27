@@ -48,7 +48,7 @@ public class Parser {
             return new JokeCommand();
         }
         Scanner sc = new Scanner(userInput);
-        String commandString = sc.next();
+        String commandString = sc.next().toLowerCase();
 
         switch (commandString) {
         case "todo":
