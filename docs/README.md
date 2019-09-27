@@ -127,7 +127,7 @@ Example of usage:
 
 Expected outcome:
 ```
-Sort it yourseld... Ok fine here it is:
+Sort it yourself... Ok fine here it is:
 1. [D][✘] feed me (by: 12:34 2000-01-01)
 2. [D][✘] feed me later (by: 12:34 2019-12-12)
 ```
