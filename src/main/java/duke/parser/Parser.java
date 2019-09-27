@@ -54,34 +54,52 @@ public class Parser {
         case "todo":
             try {
                 String desc = sc.nextLine();
-                String trimmedDesc = desc.trim();
-                return new TodoCommand(trimmedDesc);
+                String strippedDesc = desc.strip();
+                return new TodoCommand(strippedDesc);
             } catch (NoSuchElementException e) {
                 throw new DukeException("Incomplete command. Please include a description!", e);
             }
         case "deadline":
-            //fallthrough
-        case "event":
             try {
-                String[] descriptionAndDate = sc.nextLine().split("/", 2);
-                String[] dateTimeArr = descriptionAndDate[1].split(" ");
+                String[] descriptionAndDate = sc.nextLine().split("/by", 2);
+                String desc = descriptionAndDate[0].strip();
+                String dateTimeString = descriptionAndDate[1].strip();
 
-                String desc = descriptionAndDate[0].trim();
-                logger.info("description: " +  desc);
-
+                //parse date
+                String[] dateTimeArr = dateTimeString.split(" ");
                 LocalDate date = LocalDate.parse(dateTimeArr[0], dateFormatter());
-                logger.info(dateTimeArr[1]);
+
+                //parse time
                 String[] timeRange = dateTimeArr[1].split("-");
                 LocalTime time = LocalTime.parse(timeRange[0], timeFormatter());
 
-                if (commandString.equals("deadline")) {
-                    return new DeadlineCommand(desc, date, time);
-                } else {
-                    LocalTime endTime = LocalTime.parse(timeRange[1], timeFormatter());
-                    return new EventCommand(desc, date, time, endTime);
-                }
+                logger.info("deadline created");
+                return new DeadlineCommand(desc, date, time);
             } catch (ArrayIndexOutOfBoundsException | NoSuchElementException | DateTimeParseException e) {
-                throw new DukeException("Incomplete command, include a date and time you fool.", e);
+                throw new DukeException("Incomplete command, the format should be the following you fool:\n"
+                        + "deadline [description] /by [dd-MM-yyyy] [HHmm]", e);
+            }
+        case "event":
+            try {
+                String[] descriptionAndDate = sc.nextLine().split("/at", 2);
+                String desc = descriptionAndDate[0].strip();
+                String dateTimeString = descriptionAndDate[1].strip();
+
+
+                //parse date
+                String[] dateTimeArr = dateTimeString.split(" ");
+                LocalDate date = LocalDate.parse(dateTimeArr[0], dateFormatter());
+
+                //parse time
+                String[] timeRange = dateTimeArr[1].split("-");
+                LocalTime startTime = LocalTime.parse(timeRange[0], timeFormatter());
+                LocalTime endTime = LocalTime.parse(timeRange[1], timeFormatter());
+                
+                logger.info("event created");
+                return new EventCommand(desc, date, startTime, endTime);
+            } catch (ArrayIndexOutOfBoundsException | NoSuchElementException | DateTimeParseException e) {
+                throw new DukeException("Incomplete command, the format should be the following you fool:\n"
+                        + "event [description] /at [dd-MM-yyyy] [HHmm]-[HHmm]", e);
             }
         case "delete":
             try {
@@ -99,17 +117,19 @@ public class Parser {
             }
         case "find":
             try {
-                String keyword = sc.nextLine().trim();
+                String keyword = sc.nextLine().strip();
                 return new FindCommand(keyword);
             } catch (NoSuchElementException e) {
                 throw new DukeException("Incomplete command. Input at least 1 keyword you fool!", e);
             }
         case "sort":
             try {
-                String category = sc.nextLine().trim();
+                String category = sc.nextLine().strip();
                 return new SortCommand(category);
             } catch (NoSuchElementException e) {
-                throw new DukeException("Incomplete command. Choose a category to sort by!", e);
+                throw new DukeException("Incomplete command. Try this format:\n "
+                        + "sort [CATEGORY] \n"
+                        + "E.g. sort type, sort startDate, sort done", e);
             }
         case "list":
             return new ListCommand();

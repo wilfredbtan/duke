@@ -27,8 +27,8 @@ The Grumpy Cat knows how to add 3 kinds of tasks:
 Type | Parameters | Description
 -----| -----------| -----------
 `todo` | description | Adds a `todo` task with a `description`
-`deadline` | description \[dd-mm-yyyy] [HHmm] | Adds a  `deadline` task with a `description`, `date` and `time`
-`event` | description \[dd-mm-yyyy] [HHmm]-[HHmm] | Adds a  `deadline` task with a `description`, `startDate` ,`startTime` and `endTime`
+`deadline` | description \by [dd-MM-yyyy] [HHmm] | Adds a  `deadline` task with a `description`, `date` and `time`
+`event` | description \at [dd-MM-yyyy] [HHmm]-[HHmm] | Adds a  `deadline` task with a `description`, `startDate` ,`startTime` and `endTime`
 
 ### todo - Add a new Todo to the list.
 
@@ -47,7 +47,7 @@ Now you have 1 task in this list.
 
 Example of usage: 
 
-`deadline pat grumpy cat /12/12/2019 1234`
+`deadline pat grumpy cat /by 12/12/2019 1234`
 
 Expected outcome:  
 ```
@@ -60,7 +60,7 @@ Now you have 1 task in this list.
 
 Example of usage: 
 
-`event pat grumpy cat /12/12/2019 1234-2345`
+`event pat grumpy cat /at 12/12/2019 1234-2345`
 
 Expected outcome:  
 ```
