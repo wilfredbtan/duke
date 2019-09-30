@@ -176,7 +176,7 @@ public class TaskList {
         try {
             return tasks.get(index);
         } catch (IndexOutOfBoundsException e) {
-            throw new DukeException("That index is out of range! Task not marked as done.", e);
+            throw new DukeException("That index is out of range!", e);
         }
     }
 
